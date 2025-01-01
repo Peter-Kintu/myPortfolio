@@ -1,0 +1,359 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #1f242d;
+    color: #fff;
+    transition: background 0.5s;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+/* Default styling for desktop */
+.navbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 20px 9%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for smaller screens */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column; /* Stack items vertically */
+        padding: 10px 5%; /* Adjust padding */
+    }
+    
+    /* Adjust your logo or nav items if needed */
+    .navbar .logo {
+        margin-bottom: 10px;
+    }
+    
+    .navbar .nav-items {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+
+.navbar .logo {
+    font-size: 34px;
+    font-weight: 700;
+    color: cornflowerblue;
+    transition: color 0.3s, transform 0.3s;
+}
+.navbar .logo:hover {
+     color: #7cf03d; 
+     transform: scale(1.1); 
+    }
+
+.navbar ul {
+    display: flex;
+}
+
+.navbar ul li {
+    list-style: none;
+    margin: 0 30px;
+}
+
+.navbar ul li a {
+    font-size: 20px;
+    font-weight: 500;
+    position: relative; /* Needed for the pseudo-element */
+}
+
+.navbar ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    margin-top: 5px;
+    right: 0;
+    background: #7cf03d;
+    -webkit-transition: width 0.3s ease-in-out;
+    transition: width 0.3s ease-in-out;
+}
+
+.navbar ul li a:hover::after {
+    width: 100%; /* Expand the underline */
+    left: 0;
+}
+
+.navbar ul li:hover a,
+.navbar ul li.active a{
+    color: #7cf03d;
+    transform: scale(1.2) rotate(5deg); /* Slight rotation for a more dynamic effect */
+    transition: transform 0.3s ease-in-out; /* Smooth rotation transition */
+}
+
+/* Default styling for larger screens */
+.home {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    padding: 60px 9% 0;
+    color: #fff;
+}
+
+.home-info h1 {
+    font-size: 50px;
+    color: rgb(250, 245, 250);
+}
+
+.home-info h2 {
+    font-family: Arial, sans-serif; /* Correct font-family syntax */
+    font-size: 32px;
+    margin-top: -10px;
+}
+
+.home-info p {
+    font-size: 16px;
+    margin: 10px 0 25px;
+}
+
+.home-info .btn-sci {
+    display: flex;
+    align-items: center;
+}
+
+/* Styling for tablets */
+@media (max-width: 1024px) {
+    .home-info h1 {
+        font-size: 42px;
+    }
+
+    .home-info h2 {
+        font-size: 28px;
+        margin-top: 0;
+    }
+    
+    .home-info p {
+        font-size: 14px;
+    }
+}
+
+/* Styling for small screens */
+@media (max-width: 768px) {
+    .home {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 30px 5%;
+    }
+    
+    .home-info {
+        padding-top: 80px; /* Push content down */
+    }
+
+    .home-info h1 {
+        font-size: 32px;
+    }
+    
+    .home-info h2 {
+        font-size: 24px;
+        margin-top: 10px;
+    }
+    
+    .home-info p {
+        font-size: 12px;
+    }
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 30px;
+    background:  #419e0f;
+    border: 2px solid #253f17;
+    border-radius: 30px;
+    box-shadow: 0 0 10px #2e4b1e;
+    font-size: 16px;
+    color: #ffff;
+    font-weight: 600;
+    transition: background 0.3s, color 0.3s; /* Adding transition for a smooth effect */
+}
+
+.btn:hover {
+    background: transparent;
+    background:cornflowerblue;  /* Change background color on hover */
+    color: #1f1c1f; /* Change text color on hover */
+}
+
+.home-info .btn-sci .sci {
+    margin: 30px;
+}
+
+.home-info .btn-sci .sci a{
+    display: inline-flex;
+    padding: 8px;
+    border: 2px solid #7cf03d;
+    border-radius: 50%;
+    font-size: 20px;
+    color: #7cf03d;
+    margin: 0.8px;
+    transition: 3s;
+}
+
+.home-info .btn-sci .sci a:hover{
+    background: #419e0f;
+    color: #253f17;
+    box-shadow: 0 0 10px #7cf03d;
+}
+
+.home-img .img-box{
+    position: relative;
+    width: 32vw;
+    height: 32vw;
+    background: rgb(70, 17, 100);
+    border-radius: 50%;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.home-img .img-box::before,
+.home-img .img-box::after{
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: conic-gradient(transparent, transparent,
+     transparent, #7cf03d);
+}
+
+.home-img .img-box .img-item{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: rgb(236, 235, 240);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.home-img .img-box .img-item img {
+    position: absolute;
+    display: block;
+    border-radius: 50%;
+    width: 100%; /* Ensures the image maintains its size within the container */
+    height: auto; /* Maintains the aspect ratio of the image */
+    object-fit: cover;
+    
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.home-img .img-box .img-item img {
+    border-radius: 50%;
+    width: 100%;
+    height: auto;
+    animation: rotate 5s linear infinite; /* Applying the rotation animation */
+}
+
+/* Styles for the About page */
+.about {
+    padding: 50px 20px;
+    background-color: #1f242d;
+    color: #419e0f;
+    text-align: center;
+    min-height: 100vh; /* Ensures the section takes full viewport height */
+}
+
+.about-info h1 {
+    font-size: 36px;
+    margin-bottom: 40px;
+    color: #1f242d;
+}
+
+.about-info p {
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 10px auto;
+    color: #edf0eb;
+    text-align: left;
+}
+
+/* Navbar active link styling */
+.navbar ul li.active a {
+    color: #253f17; /* Highlight color for active link */
+}
+
+/* Contact Section Styles */
+.contact {
+    padding: 60px 20px;
+    background-color: #e5e5e5;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-info h1 {
+    font-size: 48px;
+    margin-bottom: 30px;
+    color: #253f17;
+}
+
+.contact-info p {
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    color: #2e4b1e;
+}
+
+.contact-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.contact-info ul li {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #333333;
+    transition: color 0.3s;
+}
+
+.contact-info ul li a {
+    color: #365725;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.contact-info ul li a:hover {
+    color: #253f17;
+}

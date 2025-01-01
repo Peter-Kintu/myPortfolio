@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Kintu Peter</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: #1f242d;
+         
+            
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: #1f242d;
+            color: #fff;
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar ul li {
+            margin: 0 10px;
+        }
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .navbar ul li.active a {
+            font-weight: bold;
+        }
+        header {
+            text-align: center;
+            padding: 100px 20px 50px;
+            background: #2c2c2c;
+        }
+        header h1 {
+            margin: 0;
+            padding: 10px 0;
+            font-size: 2.5em;
+        }
+        header p {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        .btn-github {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .portfolio {
+            padding: 50px 20px;
+            background: #fff;
+        }
+        .project {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">My Portfolio</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li class="active"><a href="portfolio.html">Portfolio</a></li>
+        </ul>
+    </nav>
+    <header>
+        <h1>Welcome to My Portfolio</h1>
+        <p>Explore my projects and skills.</p>
+        <a href="https://github.com/Peter-Kintu" target="_blank" class="btn-github">
+            <i class="bx bxl-github"></i> Visit my GitHub
+        </a>
+    </header>
+    <section class="portfolio">
+        <h2>My Projects</h2>
+        <div class="project">
+            <h3>Project 1</h3>
+            <p>Description of Project 1.</p>
+        </div>
+        <div class="project">
+            <h3>Project 2</h3>
+            <p>Description of Project 2.</p>
+        </div>
+    </section>
+</body>
+</html>
