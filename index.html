@@ -8,7 +8,147 @@
   <meta name="keywords" content="Kintu Peter, Flutter, Django, React, AI, Blockchain, Uganda Developer" />
   <meta name="author" content="Kintu Peter" />
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #0078D4;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .nav-links li.active a {
+      color: #0078D4;
+    }
+
+    .home {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 60px 40px;
+    }
+
+    .home-info {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .home-info h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .home-info h1 span {
+      color: #0078D4;
+    }
+
+    .home-info h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .home-info p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .btn-sci {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #0078D4;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #005fa3;
+    }
+
+    .sci {
+      display: flex;
+      gap: 15px;
+    }
+
+    .sci a {
+      font-size: 1.5rem;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+
+    .sci a:hover {
+      color: #0078D4;
+    }
+
+    .home-img {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 0;
+      background: none;
+    }
+
+    .img-box {
+      max-width: 300px;
+      width: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+      background: transparent;
+    }
+
+    .img-box:hover {
+      transform: scale(1.05);
+    }
+
+    .profile-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      background: none;
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
