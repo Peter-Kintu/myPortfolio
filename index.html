@@ -7,6 +7,9 @@
     <meta name="description" content="Portfolio of Kintu Peter, a full stack developer specializing in Flutter, Django, React, AI, and Blockchain." />
     <meta name="keywords" content="Kintu Peter, Flutter, Django, React, AI, Blockchain, Uganda Developer" />
     <meta name="author" content="Kintu Peter" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <script>
       // Function to display messages in the chat
@@ -24,45 +27,55 @@
           chatWindow.scrollTop = chatWindow.scrollHeight; // Auto-scroll to the bottom
       }
 
-      // Local knowledge base about Kintu Peter
-      const localKnowledge = {
-          "profession": "Kintu Peter is a Full Stack Developer, AI Engineer, and Blockchain Innovator.",
-          "skills": "His skills include Flutter, Django, React, C# .NET, and AI integration.",
-          "location": "Kintu Peter is based in Uganda, with a mission to create digital experiences that empower communities across Africa and beyond.",
-          "contact": "You can contact him by downloading his CV or connecting on GitHub, LinkedIn, WhatsApp, or email.",
-          "mission": "His mission is to build intelligent, secure, and scalable applications that drive innovation.",
-          "hobbies": "Kintu Peter enjoys continuously exploring new tools and frameworks to stay ahead of the curve."
-      };
+      // Local knowledge base about Kintu Peter with better keyword matching
+      const localKnowledge = [
+          {
+              keywords: ["who is kintu peter", "who are you", "who is the developer"],
+              response: "Kintu Peter is a passionate full stack developer, AI engineer, and blockchain innovator."
+          },
+          {
+              keywords: ["what are your skills", "skills", "what do you do", "expertise"],
+              response: "Kintu Peter's expertise spans Flutter, Django, React, C# .NET, and AI integration."
+          },
+          {
+              keywords: ["where are you based", "where is kintu peter from", "location"],
+              response: "Kintu Peter is based in Uganda, and he builds applications to empower communities across Africa and beyond."
+          },
+          {
+              keywords: ["how can i contact you", "contact", "email", "phone", "linkedin"],
+              response: "You can find his contact information on this page, including links to his CV, GitHub, LinkedIn, WhatsApp, and email."
+          },
+          {
+              keywords: ["what is your mission", "mission statement", "goal"],
+              response: "His mission is to build intelligent, secure, and scalable applications that create innovative digital experiences."
+          }
+      ];
 
       const handleChat = async (query) => {
-          let response = "I'm not sure how to answer that. Let me get some more general information for you.";
-          let matched = false;
+          let response = null;
           const lowerCaseQuery = query.toLowerCase();
 
           // Check against local knowledge base
-          for (const key in localKnowledge) {
-              if (lowerCaseQuery.includes(key)) {
-                  response = localKnowledge[key];
-                  matched = true;
+          for (const item of localKnowledge) {
+              if (item.keywords.some(keyword => lowerCaseQuery.includes(keyword))) {
+                  response = item.response;
                   break;
               }
           }
 
           // If no local match, use Gemini API
-          if (!matched) {
+          if (!response) {
               displayMessage("...", false); // Show loading indicator
               try {
                   const geminiResponse = await callGeminiAPI(query);
-                  if (geminiResponse) {
-                      response = geminiResponse;
-                  }
+                  response = geminiResponse || "I couldn't find an answer for that. Please try asking in a different way.";
               } catch (error) {
                   console.error('Error calling Gemini API:', error);
-                  response = "I encountered an error trying to get that information. Please try again later.";
+                  response = "I'm having trouble connecting right now. Please try again later.";
               }
           }
-
-          // Replace loading indicator with the actual response
+          
+          // Replace loading indicator with the actual response or display a new one
           const loadingIndicator = document.querySelector('.bot-message:last-child');
           if (loadingIndicator && loadingIndicator.textContent === "...") {
               loadingIndicator.textContent = response;
@@ -129,11 +142,21 @@
       };
     </script>
     <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #f5f5f5;
+            --secondary-text-color: #ccc;
+            --primary-color: #0078D4;
+            --border-color: #333;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
         body {
             margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
         }
 
         .navbar {
@@ -141,100 +164,120 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 40px;
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            background-color: transparent;
+            position: absolute;
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 10;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #0078D4;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
             text-decoration: none;
+            letter-spacing: 1px;
         }
 
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 20px;
+            gap: 30px;
+            font-weight: 500;
         }
 
         .nav-links li a {
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
+            color: var(--text-color);
+            transition: color 0.3s ease;
         }
 
+        .nav-links li a:hover,
         .nav-links li.active a {
-            color: #0078D4;
+            color: var(--primary-color);
         }
 
         .home {
+            min-height: 100vh;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 60px 40px;
+            padding: 80px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 120, 212, 0.1), rgba(26, 26, 26, 1));
         }
 
-        .home-info {
+        .home-content {
             flex: 1;
-            max-width: 600px;
+            max-width: 800px;
+            margin-bottom: 40px;
         }
 
-        .home-info h1 {
-            font-size: 2.5rem;
+        .home-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
             margin-bottom: 10px;
+            line-height: 1.2;
         }
 
-        .home-info h1 span {
-            color: #0078D4;
+        .home-content h1 span {
+            color: var(--primary-color);
         }
 
-        .home-info h2 {
-            font-size: 1.5rem;
+        .home-content h2 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: var(--secondary-text-color);
             margin-bottom: 20px;
         }
 
-        .home-info p {
+        .home-content p {
             font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            color: var(--secondary-text-color);
+            max-width: 600px;
+            margin: 0 auto 30px;
         }
 
         .btn-sci {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
             gap: 20px;
         }
 
         .btn {
             display: inline-block;
-            padding: 12px 24px;
-            background-color: #0078D4;
-            color: #fff;
+            padding: 14px 28px;
+            background-color: var(--primary-color);
+            color: var(--text-color);
             text-decoration: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: bold;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 120, 212, 0.3);
         }
 
         .btn:hover {
             background-color: #005fa3;
+            transform: translateY(-3px);
         }
 
         .sci {
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
 
         .sci a {
-            font-size: 1.5rem;
-            color: #333;
-            transition: color 0.3s ease;
+            font-size: 2rem;
+            color: var(--secondary-text-color);
+            transition: color 0.3s ease, transform 0.3s ease;
         }
 
         .sci a:hover {
-            color: #0078D4;
+            color: var(--primary-color);
+            transform: translateY(-3px);
         }
 
         .home-img {
@@ -242,18 +285,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px 0;
-            background: none;
         }
 
         .img-box {
-            max-width: 300px;
-            width: 100%;
+            width: 300px;
+            height: 300px;
             border-radius: 50%;
             overflow: hidden;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+            border: 5px solid var(--primary-color);
+            box-shadow: 0 0 40px rgba(0, 120, 212, 0.5);
             transition: transform 0.3s ease;
-            background: transparent;
         }
 
         .img-box:hover {
@@ -262,10 +303,8 @@
 
         .profile-img {
             width: 100%;
-            height: auto;
-            display: block;
+            height: 100%;
             object-fit: cover;
-            background: none;
         }
 
         /* Chatbot Styles */
@@ -275,8 +314,8 @@
             right: 20px;
             width: 60px;
             height: 60px;
-            background-color: #0078D4;
-            color: #fff;
+            background-color: var(--primary-color);
+            color: var(--text-color);
             border: none;
             border-radius: 50%;
             display: flex;
@@ -284,7 +323,7 @@
             justify-content: center;
             font-size: 1.8rem;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--box-shadow);
             transition: transform 0.3s ease;
             z-index: 1000;
         }
@@ -299,9 +338,9 @@
             right: 20px;
             width: 350px;
             height: 450px;
-            background-color: #fff;
+            background-color: #2b2b2b;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--box-shadow);
             display: none;
             flex-direction: column;
             overflow: hidden;
@@ -313,18 +352,20 @@
         }
 
         .chat-header {
-            background-color: #0078D4;
-            color: #fff;
+            background-color: var(--primary-color);
+            color: var(--text-color);
             padding: 15px;
             font-weight: bold;
             text-align: center;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
         }
 
         #chat-messages {
             flex-grow: 1;
             padding: 15px;
             overflow-y: auto;
-            background-color: #f0f2f5;
+            background-color: #1a1a1a;
         }
 
         .message {
@@ -333,31 +374,34 @@
             border-radius: 10px;
             margin-bottom: 10px;
             line-height: 1.4;
+            word-wrap: break-word;
         }
 
         .user-message {
-            background-color: #0078D4;
-            color: #fff;
+            background-color: var(--primary-color);
+            color: var(--text-color);
             margin-left: auto;
             border-bottom-right-radius: 2px;
         }
 
         .bot-message {
-            background-color: #e5e5ea;
-            color: #000;
+            background-color: #444;
+            color: var(--text-color);
             border-bottom-left-radius: 2px;
         }
         
         .chat-input-container {
             display: flex;
             padding: 10px;
-            border-top: 1px solid #ddd;
+            border-top: 1px solid var(--border-color);
         }
 
         #chat-input {
             flex-grow: 1;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--border-color);
+            background-color: #333;
+            color: var(--text-color);
             border-radius: 20px;
             font-size: 1rem;
             outline: none;
@@ -367,7 +411,7 @@
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: #0078D4;
+            color: var(--primary-color);
             cursor: pointer;
             margin-left: 10px;
             transition: color 0.3s ease;
@@ -381,14 +425,18 @@
             .navbar {
                 padding: 15px 20px;
             }
+            
+            .nav-links {
+                display: none;
+            }
 
             .home {
                 flex-direction: column-reverse;
                 text-align: center;
-                padding: 40px 20px;
+                padding: 60px 20px;
             }
 
-            .home-info, .home-img {
+            .home-content, .home-img {
                 width: 100%;
                 text-align: center;
             }
@@ -397,13 +445,12 @@
                 margin-bottom: 20px;
             }
 
-            .btn-sci {
-                flex-direction: row;
-                justify-content: center;
+            .home-content h1 {
+                font-size: 2.5rem;
             }
 
-            .sci {
-                gap: 10px;
+            .home-content h2 {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -419,10 +466,10 @@
     </nav>
 
     <section class="home">
-        <div class="home-info">
+        <div class="home-content">
             <h1>Hello, I'm <span>Kintu Peter</span></h1>
             <h2>Full Stack Developer | AI Engineer | Blockchain Innovator</h2>
-            <p>I build intelligent, secure, and scalable applications across mobile, web, and blockchain platforms. My mission is to create digital experiences that empower communities and drive innovation across Africa and beyond.</p>
+            <p>I build intelligent, secure, and scalable applications across mobile, web, and blockchain platforms. My mission is to create innovative digital experiences that empower communities and drive innovation across Africa and beyond.</p>
 
             <div class="btn-sci">
                 <a href="cv.Peter.pdf" class="btn" download>📄 Download CV</a>
@@ -437,7 +484,7 @@
 
         <div class="home-img">
             <div class="img-box">
-                <img src="https://placehold.co/300x300/e5e5ea/5c5c63?text=Peter" alt="Kintu Peter" class="profile-img" />
+                <img src="https://placehold.co/300x300/0078D4/ffffff?text=Kintu+Peter" alt="Kintu Peter" class="profile-img" />
             </div>
         </div>
     </section>
@@ -447,6 +494,8 @@
         <div class="chat-header">Kintu Peter Bot</div>
         <div id="chat-messages">
             <div class="message bot-message">Hi! I can answer questions about Kintu Peter. What would you like to know?</div>
+            <div class="message user-message">Who is Kintu Peter?</div>
+            <div class="message bot-message">Kintu Peter is a passionate full stack developer, AI engineer, and blockchain innovator.</div>
         </div>
         <div class="chat-input-container">
             <input type="text" id="chat-input" placeholder="Ask me anything..." />
