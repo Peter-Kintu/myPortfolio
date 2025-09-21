@@ -1,187 +1,459 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kintu Peter | Full Stack Developer & AI Engineer</title>
-  <meta name="description" content="Portfolio of Kintu Peter, a full stack developer specializing in Flutter, Django, React, AI, and Blockchain." />
-  <meta name="keywords" content="Kintu Peter, Flutter, Django, React, AI, Blockchain, Uganda Developer" />
-  <meta name="author" content="Kintu Peter" />
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kintu Peter | Full Stack Developer & AI Engineer</title>
+    <meta name="description" content="Portfolio of Kintu Peter, a full stack developer specializing in Flutter, Django, React, AI, and Blockchain." />
+    <meta name="keywords" content="Kintu Peter, Flutter, Django, React, AI, Blockchain, Uganda Developer" />
+    <meta name="author" content="Kintu Peter" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script>
+      // Function to display messages in the chat
+      function displayMessage(text, isUser = false) {
+          const chatWindow = document.getElementById('chat-messages');
+          const messageElement = document.createElement('div');
+          messageElement.classList.add('message');
+          if (isUser) {
+              messageElement.classList.add('user-message');
+          } else {
+              messageElement.classList.add('bot-message');
+          }
+          messageElement.textContent = text;
+          chatWindow.appendChild(messageElement);
+          chatWindow.scrollTop = chatWindow.scrollHeight; // Auto-scroll to the bottom
+      }
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
-    }
+      // Local knowledge base about Kintu Peter
+      const localKnowledge = {
+          "profession": "Kintu Peter is a Full Stack Developer, AI Engineer, and Blockchain Innovator.",
+          "skills": "His skills include Flutter, Django, React, C# .NET, and AI integration.",
+          "location": "Kintu Peter is based in Uganda, with a mission to create digital experiences that empower communities across Africa and beyond.",
+          "contact": "You can contact him by downloading his CV or connecting on GitHub, LinkedIn, WhatsApp, or email.",
+          "mission": "His mission is to build intelligent, secure, and scalable applications that drive innovation.",
+          "hobbies": "Kintu Peter enjoys continuously exploring new tools and frameworks to stay ahead of the curve."
+      };
 
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      background-color: #fff;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
+      const handleChat = async (query) => {
+          let response = "I'm not sure how to answer that. Let me get some more general information for you.";
+          let matched = false;
+          const lowerCaseQuery = query.toLowerCase();
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #0078D4;
-      text-decoration: none;
-    }
+          // Check against local knowledge base
+          for (const key in localKnowledge) {
+              if (lowerCaseQuery.includes(key)) {
+                  response = localKnowledge[key];
+                  matched = true;
+                  break;
+              }
+          }
 
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-    }
+          // If no local match, use Gemini API
+          if (!matched) {
+              displayMessage("...", false); // Show loading indicator
+              try {
+                  const geminiResponse = await callGeminiAPI(query);
+                  if (geminiResponse) {
+                      response = geminiResponse;
+                  }
+              } catch (error) {
+                  console.error('Error calling Gemini API:', error);
+                  response = "I encountered an error trying to get that information. Please try again later.";
+              }
+          }
 
-    .nav-links li a {
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-    }
+          // Replace loading indicator with the actual response
+          const loadingIndicator = document.querySelector('.bot-message:last-child');
+          if (loadingIndicator && loadingIndicator.textContent === "...") {
+              loadingIndicator.textContent = response;
+          } else {
+              displayMessage(response, false);
+          }
+      };
 
-    .nav-links li.active a {
-      color: #0078D4;
-    }
+      const callGeminiAPI = async (userPrompt) => {
+          const systemPrompt = "You are a helpful assistant. Provide a concise, clear answer to the user's question.";
+          const apiKey = "AIzaSyCVj9c7qbPqq_3R9WgWbaRmQ6WQT3-c7CA";
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
-    .home {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      padding: 60px 40px;
-    }
+          const payload = {
+              contents: [{ parts: [{ text: userPrompt }] }],
+              tools: [{ "google_search": {} }],
+              systemInstruction: {
+                  parts: [{ text: systemPrompt }]
+              },
+          };
 
-    .home-info {
-      flex: 1;
-      max-width: 600px;
-    }
+          const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+          });
 
-    .home-info h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
+          if (!response.ok) {
+              const errorText = await response.text();
+              throw new Error(`API error: ${response.status} ${errorText}`);
+          }
 
-    .home-info h1 span {
-      color: #0078D4;
-    }
+          const result = await response.json();
+          const candidate = result.candidates?.[0];
+          return candidate?.content?.parts?.[0]?.text || '';
+      };
+      
+      window.onload = function() {
+          const chatButton = document.getElementById('chat-toggle');
+          const chatContainer = document.getElementById('chat-container');
+          const chatInput = document.getElementById('chat-input');
+          const sendButton = document.getElementById('send-button');
 
-    .home-info h2 {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-    }
+          chatButton.addEventListener('click', () => {
+              chatContainer.classList.toggle('open');
+          });
 
-    .home-info p {
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 30px;
-    }
+          const sendMessage = () => {
+              const userQuery = chatInput.value.trim();
+              if (userQuery) {
+                  displayMessage(userQuery, true);
+                  chatInput.value = '';
+                  handleChat(userQuery);
+              }
+          };
 
-    .btn-sci {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+          sendButton.addEventListener('click', sendMessage);
 
-    .btn {
-      display: inline-block;
-      padding: 12px 24px;
-      background-color: #0078D4;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
+          chatInput.addEventListener('keypress', (event) => {
+              if (event.key === 'Enter') {
+                  sendMessage();
+              }
+          });
+      };
+    </script>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
 
-    .btn:hover {
-      background-color: #005fa3;
-    }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
 
-    .sci {
-      display: flex;
-      gap: 15px;
-    }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0078D4;
+            text-decoration: none;
+        }
 
-    .sci a {
-      font-size: 1.5rem;
-      color: #333;
-      transition: color 0.3s ease;
-    }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
 
-    .sci a:hover {
-      color: #0078D4;
-    }
+        .nav-links li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
 
-    .home-img {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 0;
-      background: none;
-    }
+        .nav-links li.active a {
+            color: #0078D4;
+        }
 
-    .img-box {
-      max-width: 300px;
-      width: 100%;
-      border-radius: 50%;
-      overflow: hidden;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
-      transition: transform 0.3s ease;
-      background: transparent;
-    }
+        .home {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px 40px;
+        }
 
-    .img-box:hover {
-      transform: scale(1.05);
-    }
+        .home-info {
+            flex: 1;
+            max-width: 600px;
+        }
 
-    .profile-img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-      background: none;
-    }
-  </style>
+        .home-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .home-info h1 span {
+            color: #0078D4;
+        }
+
+        .home-info h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .home-info p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn-sci {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #0078D4;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #005fa3;
+        }
+
+        .sci {
+            display: flex;
+            gap: 15px;
+        }
+
+        .sci a {
+            font-size: 1.5rem;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .sci a:hover {
+            color: #0078D4;
+        }
+
+        .home-img {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0;
+            background: none;
+        }
+
+        .img-box {
+            max-width: 300px;
+            width: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+            background: transparent;
+        }
+
+        .img-box:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            background: none;
+        }
+
+        /* Chatbot Styles */
+        #chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #0078D4;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        #chat-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        #chat-container {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 999;
+        }
+
+        #chat-container.open {
+            display: flex;
+        }
+
+        .chat-header {
+            background-color: #0078D4;
+            color: #fff;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #f0f2f5;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .user-message {
+            background-color: #0078D4;
+            color: #fff;
+            margin-left: auto;
+            border-bottom-right-radius: 2px;
+        }
+
+        .bot-message {
+            background-color: #e5e5ea;
+            color: #000;
+            border-bottom-left-radius: 2px;
+        }
+        
+        .chat-input-container {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        #chat-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        #send-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #0078D4;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: color 0.3s ease;
+        }
+
+        #send-button:hover {
+            color: #005fa3;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .home {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 40px 20px;
+            }
+
+            .home-info, .home-img {
+                width: 100%;
+                text-align: center;
+            }
+
+            .home-img {
+                margin-bottom: 20px;
+            }
+
+            .btn-sci {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .sci {
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <nav class="navbar">
-    <a href="index.html" class="logo">Kintu Peter</a>
-    <ul class="nav-links">
-      <li class="active"><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="portfolio.html">Portfolio</a></li>
-    </ul>
-  </nav>
+    <nav class="navbar">
+        <a href="#" class="logo">Kintu Peter</a>
+        <ul class="nav-links">
+            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+        </ul>
+    </nav>
 
-  <section class="home">
-    <div class="home-info">
-      <h1>Hello, I'm <span>Kintu Peter</span></h1>
-      <h2>Full Stack Developer | AI Engineer | Blockchain Innovator</h2>
-      <p>I build intelligent, secure, and scalable applications across mobile, web, and blockchain platforms. My mission is to create digital experiences that empower communities and drive innovation across Africa and beyond.</p>
+    <section class="home">
+        <div class="home-info">
+            <h1>Hello, I'm <span>Kintu Peter</span></h1>
+            <h2>Full Stack Developer | AI Engineer | Blockchain Innovator</h2>
+            <p>I build intelligent, secure, and scalable applications across mobile, web, and blockchain platforms. My mission is to create digital experiences that empower communities and drive innovation across Africa and beyond.</p>
 
-      <div class="btn-sci">
-        <a href="cv.Peter.pdf" class="btn" download>📄 Download CV</a>
-        <div class="sci">
-          <a href="https://github.com/Peter-Kintu" target="_blank"><i class="bx bxl-github"></i></a>
-          <a href="https://linkedin.com/in/peter-kintu" target="_blank"><i class="bx bxl-linkedin"></i></a>
-          <a href="https://wa.me/256789746493" target="_blank"><i class="bx bxl-whatsapp"></i></a>
-          <a href="mailto:kintupeter7@gmail.com"><i class="bx bx-envelope"></i></a>
+            <div class="btn-sci">
+                <a href="cv.Peter.pdf" class="btn" download>📄 Download CV</a>
+                <div class="sci">
+                    <a href="https://github.com/Peter-Kintu" target="_blank"><i class="bx bxl-github"></i></a>
+                    <a href="https://linkedin.com/in/peter-kintu" target="_blank"><i class="bx bxl-linkedin"></i></a>
+                    <a href="https://wa.me/256789746493" target="_blank"><i class="bx bxl-whatsapp"></i></a>
+                    <a href="mailto:kintupeter7@gmail.com"><i class="bx bx-envelope"></i></a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="home-img">
-      <div class="img-box">
-        <img src="peter.jpg" alt="Kintu Peter" class="profile-img" />
-      </div>
+        <div class="home-img">
+            <div class="img-box">
+                <img src="https://placehold.co/300x300/e5e5ea/5c5c63?text=Peter" alt="Kintu Peter" class="profile-img" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Chatbot Container -->
+    <div id="chat-container">
+        <div class="chat-header">Kintu Peter Bot</div>
+        <div id="chat-messages">
+            <div class="message bot-message">Hi! I can answer questions about Kintu Peter. What would you like to know?</div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Ask me anything..." />
+            <button id="send-button"><i class="bx bxs-send"></i></button>
+        </div>
     </div>
-  </section>
+    
+    <button id="chat-toggle"><i class="bx bx-chat"></i></button>
 </body>
 </html>
