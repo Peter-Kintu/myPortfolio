@@ -3,50 +3,144 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kintu Peter | AI Systems Architect</title>
-    
+    <title>Kintu Peter | AI Systems Architect & LLM Engineer</title>
+    <meta name="description" content="Portfolio of Kintu Peter, an AI Engineer and Systems Architect specializing in LLMs, Flutter, and Blockchain." />
+    <meta name="keywords" content="Kintu Peter, AI Engineer, LLM Engineer, Flutter, Blockchain, Nakintu AI, Africana AI, Uganda Developer" />
+    <meta name="author" content="Kintu Peter" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script>
+      // Enhanced Knowledge Base including new AI Platforms
+      const localKnowledge = [
+          {
+              keywords: ["who is kintu peter", "about", "developer"],
+              response: "Kintu Peter is an AI Systems Architect and Full Stack Developer specializing in LLM-powered applications, autonomous agents, and scalable intelligent platforms."
+          },
+          {
+              keywords: ["nakintu ai", "learnflow"],
+              response: "Nakintu AI (formerly LearnFlow AI) is Kintu's flagship educational platform featuring AI tutoring, automated report generation, and multilingual learning tools."
+          },
+          {
+              keywords: ["africana ai", "ecommerce", "negotiation"],
+              response: "Africana AI is an intelligent economic engine built by Peter that uses AI agents for real-time price negotiation and automated e-commerce workflows."
+          },
+          {
+              keywords: ["skills", "expertise", "tech stack"],
+              response: "His core expertise includes AI/ML (Transformers, Fine-tuning), Mobile (Flutter), Backend (Django, Python), and Web3 (Solidity, Smart Contracts)."
+          },
+          {
+              keywords: ["contact", "email", "whatsapp", "hire"],
+              response: "You can reach Peter at kintupeter7@gmail.com or via WhatsApp at +256 789 746 493."
+          }
+      ];
 
+      function displayMessage(text, isUser = false) {
+          const chatWindow = document.getElementById('chat-messages');
+          const messageElement = document.createElement('div');
+          messageElement.classList.add('message');
+          messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
+          messageElement.textContent = text;
+          chatWindow.appendChild(messageElement);
+          chatWindow.scrollTop = chatWindow.scrollHeight;
+      }
+
+      const handleChat = async (query) => {
+          let response = null;
+          const lowerCaseQuery = query.toLowerCase();
+
+          for (const item of localKnowledge) {
+              if (item.keywords.some(keyword => lowerCaseQuery.includes(keyword))) {
+                  response = item.response;
+                  break;
+              }
+          }
+
+          if (!response) {
+              displayMessage("Consulting AI brain...", false);
+              try {
+                  response = await callGeminiAPI(query);
+              } catch (error) {
+                  response = "I'm currently optimizing my circuits. Please try again shortly!";
+              }
+          }
+          
+          const messages = document.querySelectorAll('.bot-message');
+          const lastMsg = messages[messages.length - 1];
+          if (lastMsg && lastMsg.textContent === "Consulting AI brain...") {
+              lastMsg.textContent = response;
+          } else {
+              displayMessage(response, false);
+          }
+      };
+
+      const callGeminiAPI = async (userPrompt) => {
+          const apiKey = "AIzaSyCVj9c7qbPqq_3R9WgWbaRmQ6WQT3-c7CA";
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+          const payload = {
+              contents: [{ parts: [{ text: `You are the AI assistant for Kintu Peter's portfolio. He is an AI Engineer and Founder of Nakintu AI. Answer this concisely: ${userPrompt}` }] }]
+          };
+
+          const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+          });
+
+          const result = await response.json();
+          return result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm here to help with questions about Peter's work!";
+      };
+      
+      window.onload = function() {
+          const chatToggle = document.getElementById('chat-toggle');
+          const chatContainer = document.getElementById('chat-container');
+          const chatInput = document.getElementById('chat-input');
+          const sendButton = document.getElementById('send-button');
+
+          chatToggle.addEventListener('click', () => chatContainer.classList.toggle('open'));
+
+          const sendMessage = () => {
+              const query = chatInput.value.trim();
+              if (query) {
+                  displayMessage(query, true);
+                  chatInput.value = '';
+                  handleChat(query);
+              }
+          };
+
+          sendButton.addEventListener('click', sendMessage);
+          chatInput.addEventListener('keypress', (e) => e.key === 'Enter' && sendMessage());
+      };
+    </script>
     <style>
         :root {
-            --bg: #0a0a0c;
-            --card-bg: #121214;
-            --primary: #00d2ff;
-            --accent: #9d50bb;
-            --text: #ffffff;
+            --bg-dark: #0a0a0c;
+            --accent-blue: #00d2ff;
+            --accent-purple: #9d50bb;
+            --text-main: #ffffff;
             --text-dim: #a1a1aa;
-            --nav-bg: rgba(10, 10, 12, 0.9);
+            --glass: rgba(255, 255, 255, 0.03);
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth;
-        }
-
+        
         body {
+            margin: 0;
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             overflow-x: hidden;
         }
 
-        /* --- NAVIGATION --- */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 8%;
-            background: var(--nav-bg);
-            backdrop-filter: blur(12px);
+            padding: 25px 10%;
+            background: rgba(10, 10, 12, 0.8);
+            backdrop-filter: blur(15px);
             position: fixed;
             width: 100%;
-            top: 0;
+            box-sizing: border-box;
             z-index: 1000;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
@@ -54,285 +148,236 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
-            color: var(--primary);
+            color: var(--accent-blue);
             text-decoration: none;
-            letter-spacing: -1px;
         }
 
         .nav-links {
+            list-style: none;
             display: flex;
             gap: 30px;
-            list-style: none;
         }
 
         .nav-links a {
-            color: var(--text-dim);
             text-decoration: none;
-            font-size: 0.9rem;
+            color: var(--text-dim);
             font-weight: 500;
             transition: 0.3s;
         }
 
-        .nav-links a:hover {
-            color: var(--primary);
+        .nav-links a:hover, .nav-links li.active a {
+            color: white;
         }
 
-        /* --- HERO SECTION --- */
         .hero {
+            height: 100vh;
             display: flex;
-            flex-direction: column-reverse;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            padding: 100px 8% 50px;
-            gap: 50px;
+            background: radial-gradient(circle at top right, rgba(157, 80, 187, 0.1), transparent),
+                        radial-gradient(circle at bottom left, rgba(0, 210, 255, 0.1), transparent);
+            padding: 0 10%;
+            text-align: center;
         }
 
-        @media (min-width: 992px) {
-            .hero { flex-direction: row; text-align: left; }
-        }
-
-        .hero-content { flex: 1; max-width: 650px; text-align: center; }
-        @media (min-width: 992px) { .hero-content { text-align: left; } }
-
-        .hero-content h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
             line-height: 1.1;
             margin-bottom: 20px;
-            font-weight: 800;
         }
 
-        .hero-content span {
-            background: linear-gradient(to right, var(--primary), var(--accent));
+        .gradient-text {
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .hero-content p {
-            font-size: 1.1rem;
+        .hero p {
             color: var(--text-dim);
-            margin-bottom: 35px;
-            max-width: 500px;
+            font-size: 1.2rem;
+            max-width: 750px;
+            margin: 0 auto 40px;
         }
 
-        .hero-img {
-            flex: 1;
+        .btn-group {
             display: flex;
             justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            color: white;
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--text-dim);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         .img-box {
-            width: clamp(260px, 30vw, 420px);
-            height: clamp(260px, 30vw, 420px);
-            border-radius: 30px;
+            width: 280px;
+            height: 280px;
+            margin-top: 50px;
+            border-radius: 50%;
+            padding: 10px;
+            background: linear-gradient(var(--accent-blue), var(--accent-purple));
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bg-dark);
+        }
+
+        /* Chatbot UI */
+        #chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 2000;
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
+        }
+
+        #chat-container {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            width: 360px;
+            height: 500px;
+            background: #121214;
+            border-radius: 20px;
+            display: none;
+            flex-direction: column;
             border: 1px solid rgba(255,255,255,0.1);
+            z-index: 1999;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 210, 255, 0.15);
         }
 
-        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        #chat-container.open { display: flex; }
 
-        /* --- SECTION COMMONS --- */
-        section { padding: 100px 8%; }
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 60px;
-            font-weight: 800;
-        }
-        .section-title span { color: var(--primary); }
-
-        /* --- ABOUT SECTION --- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-        @media (min-width: 992px) { .about-grid { grid-template-columns: 1.2fr 1fr; } }
-
-        .about-text p { margin-bottom: 20px; color: var(--text-dim); font-size: 1.05rem; }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-        .skill-tag {
+        .chat-header {
+            padding: 20px;
             background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .skill-tag i { color: var(--primary); font-size: 1.2rem; }
-
-        /* --- PROJECTS GRID --- */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
+            text-align: center;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .project-card {
-            background: var(--card-bg);
-            padding: 35px;
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        #chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
+            gap: 12px;
         }
 
-        .project-card:hover {
-            transform: translateY(-12px);
-            border-color: var(--primary);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-        }
-
-        .project-card i.icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
-        .project-card h3 { margin-bottom: 15px; font-size: 1.4rem; }
-        .project-card p { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 25px; flex-grow: 1; }
-
-        .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
-        .tag {
-            background: rgba(0,210,255,0.08);
-            color: var(--primary);
-            padding: 5px 12px;
-            border-radius: 100px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            text-align: center;
-            padding: 60px 8%;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            color: var(--text-dim);
+        .message {
+            padding: 12px 16px;
+            border-radius: 15px;
+            max-width: 85%;
             font-size: 0.9rem;
+            line-height: 1.5;
         }
 
-        /* --- MOBILE MENU FIX --- */
+        .bot-message { background: var(--glass); align-self: flex-start; }
+        .user-message { background: var(--accent-blue); color: black; align-self: flex-end; font-weight: 500; }
+
+        .chat-input-container {
+            padding: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        #chat-input {
+            flex: 1;
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: white;
+            outline: none;
+        }
+
+        #send-button { background: none; border: none; color: var(--accent-blue); font-size: 1.5rem; cursor: pointer; }
+
         @media (max-width: 768px) {
-            .nav-links { display: none; } /* Simplified for single page */
-            .navbar { padding: 15px 5%; }
-            .hero { padding-top: 120px; }
+            .nav-links { display: none; }
+            h1 { font-size: 2.8rem; }
+            .hero { padding-top: 100px; }
+            #chat-container { width: calc(100% - 40px); right: 20px; }
         }
     </style>
 </head>
 <body>
-
     <nav class="navbar">
-        <a href="#home" class="logo">KP.ARCHITECT</a>
+        <a href="#" class="logo">KINTU PETER</a>
         <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="mailto:kintupeter7@gmail.com">Contact</a></li>
+            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="about.html">Architecture</a></li>
+            <li><a href="portfolio.html">Case Studies</a></li>
         </ul>
     </nav>
 
-    <section class="hero" id="home">
+    <section class="hero">
         <div class="hero-content">
-            <h1>Architecting <br><span>Intelligence.</span></h1>
-            <p>I am Kintu Peter, an AI Engineer and Systems Architect focused on building autonomous agents, LLM-powered applications, and scalable full-stack infrastructure.</p>
-            <div style="display:flex; gap:15px; justify-content: center; flex-wrap: wrap;">
-                <a href="#projects" style="text-decoration:none; background:var(--primary); color:#000; padding:15px 35px; border-radius:12px; font-weight:700;">Explore Projects</a>
-                <a href="https://github.com/Peter-Kintu" target="_blank" style="text-decoration:none; border:1px solid var(--text-dim); color:#fff; padding:15px 35px; border-radius:12px; font-weight:700;">GitHub Profile</a>
-            </div>
-        </div>
-        <div class="hero-img">
-            <div class="img-box"><img src="peter.jpg" alt="Kintu Peter Profile"></div>
-        </div>
-    </section>
+            <h1>Architecting <span class="gradient-text">Autonomous AI Intelligence</span></h1>
+            <p>
+                I am a specialized **AI Systems Architect** building the next generation of LLM-powered agents and scalable intelligent platforms like **Nakintu AI** and **Africana AI**.
+            </p>
 
-    <section id="about" style="background: rgba(255,255,255,0.02);">
-        <h2 class="section-title">Professional <span>Profile</span></h2>
-        <div class="about-grid">
-            <div class="about-text">
-                <p>Based in Uganda, I bridge the gap between complex AI research and practical, impactful software. With a background in Mathematics and ICT, I specialize in the "End-to-End" lifecycle of intelligent products.</p>
-                <p>Currently leading <strong>Nakintu AI</strong> and <strong>Africana AI</strong>, I focus on decentralized commerce and multilingual education technology designed for global scalability.</p>
-                <div class="skills-grid">
-                    <div class="skill-tag"><i class='bx bx-brain'></i> AI & LLMs</div>
-                    <div class="skill-tag"><i class='bx bx-mobile-alt'></i> Flutter / Dart</div>
-                    <div class="skill-tag"><i class='bx bxl-python'></i> Django / Python</div>
-                    <div class="skill-tag"><i class='bx bx-link'></i> Web3 / Solidity</div>
+            <div class="btn-group">
+                <a href="cv.Peter.pdf" class="btn btn-primary" download>📄 Download Technical Thesis (CV)</a>
+                <a href="https://github.com/Peter-Kintu" target="_blank" class="btn btn-secondary">
+                    <i class="bx bxl-github"></i> GitHub Engine
+                </a>
+            </div>
+
+            <center>
+                <div class="img-box">
+                    <img src="peter.jpg" alt="Kintu Peter" class="profile-img" />
                 </div>
-            </div>
-            <div style="background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
-                <h4 style="margin-bottom: 15px; color: var(--primary);">Quick Facts</h4>
-                <ul style="list-style: none; color: var(--text-dim); font-size: 0.95rem;">
-                    <li style="margin-bottom: 10px;"><i class='bx bx-check-circle' style="color:var(--primary);"></i> Built 3+ production AI platforms</li>
-                    <li style="margin-bottom: 10px;"><i class='bx bx-check-circle' style="color:var(--primary);"></i> 10+ mobile & web apps deployed</li>
-                    <li style="margin-bottom: 10px;"><i class='bx bx-check-circle' style="color:var(--primary);"></i> MIT App Inventor Tech Educator</li>
-                    <li><i class='bx bx-check-circle' style="color:var(--primary);"></i> Web3/Blockchain Hackathon Finalist</li>
-                </ul>
-            </div>
+            </center>
         </div>
     </section>
 
-    <section id="projects">
-        <h2 class="section-title">Selected <span>Architectures</span></h2>
-        <div class="project-grid">
-            
-            <div class="project-card">
-                <i class='bx bx-shopping-bag icon'></i>
-                <h3>Africana AI</h3>
-                <p>Autonomous economic engine featuring real-time price negotiation agents and TikTok-style video commerce.</p>
-                <div class="tag-row"><span class="tag">AI Agents</span><span class="tag">Flutter</span><span class="tag">Firebase</span></div>
-            </div>
-
-            <div class="project-card">
-                <i class='bx bx-book-open icon'></i>
-                <h3>Nakintu AI</h3>
-                <p>Multilingual EdTech platform with intelligent tutoring, automated report analysis, and quiz generation.</p>
-                <div class="tag-row"><span class="tag">LLMs</span><span class="tag">Django</span><span class="tag">React</span></div>
-            </div>
-
-            <div class="project-card">
-                <i class='bx bx-plus-medical icon'></i>
-                <h3>Musawo AI</h3>
-                <p>Clinical decision support system providing health intelligence and Al-driven patient diagnosis assistance.</p>
-                <div class="tag-row"><span class="tag">HealthTech</span><span class="tag">NLP</span><span class="tag">API</span></div>
-            </div>
-
-            <div class="project-card">
-                <i class='bx bx-link-alt icon'></i>
-                <h3>Crypto Farm</h3>
-                <p>Blockchain platform for agricultural finance featuring decentralized lending and smart contract security.</p>
-                <div class="tag-row"><span class="tag">Web3</span><span class="tag">Solidity</span><span class="tag">Base</span></div>
-            </div>
-
-            <div class="project-card">
-                <i class='bx bx-wifi icon'></i>
-                <h3>Wi-Fi Manager</h3>
-                <p>Secure authentication system using smart token distribution and embedded router session logic.</p>
-                <div class="tag-row"><span class="tag">Security</span><span class="tag">Django</span><span class="tag">Postgres</span></div>
-            </div>
-
-            <div class="project-card">
-                <i class='bx bx-analyse icon'></i>
-                <h3>AI Diagnosis</h3>
-                <p>Specialized knowledge retrieval system for healthcare professionals to assist in data-driven decision making.</p>
-                <div class="tag-row"><span class="tag">Transformers</span><span class="tag">Data</span></div>
-            </div>
-
+    <div id="chat-container">
+        <div class="chat-header">SYSTEM INTELLIGENCE V2.5</div>
+        <div id="chat-messages">
+            <div class="message bot-message">Initialization complete. I am Peter's AI representative. How can I assist with your inquiry?</div>
         </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 Kintu Peter. Designed for High Performance & Intelligence.</p>
-        <div style="margin-top:15px; font-size: 1.5rem;">
-            <a href="https://github.com/Peter-Kintu" style="color:var(--text-dim); margin: 0 10px;"><i class='bx bxl-github'></i></a>
-            <a href="https://linkedin.com/in/peter-kintu" style="color:var(--text-dim); margin: 0 10px;"><i class='bx bxl-linkedin'></i></a>
-            <a href="mailto:kintupeter7@gmail.com" style="color:var(--text-dim); margin: 0 10px;"><i class='bx bx-envelope'></i></a>
+        <div class="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Ask about Nakintu AI or Web3..." />
+            <button id="send-button"><i class="bx bxs-send"></i></button>
         </div>
-    </footer>
-
+    </div>
+    
+    <button id="chat-toggle"><i class="bx bx-bot"></i></button>
 </body>
 </html>
