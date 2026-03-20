@@ -14,34 +14,27 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
     <script>
-      /**
-       * LOCAL KNOWLEDGE ENGINE (V3.0)
-       * No external APIs. Fully offline keyword matching.
-       */
+      // Professional Knowledge Base
       const localKnowledge = [
           {
-              keywords: ["hello", "hi", "hey", "greetings", "morning", "evening", "habari"],
-              response: "Hello! I am Peter's AI representative. How can I help you learn more about his work in AI and Systems Architecture?"
+              keywords: ["who is kintu peter", "about", "developer", "background"],
+              response: "Kintu Peter is a Senior AI Systems Architect and Founder specializing in LLM-powered agents, scalable intelligent platforms, and infrastructure for the African digital economy."
           },
           {
-              keywords: ["who is", "peter", "kintu", "about", "developer", "background", "who are you", "who is he"],
-              response: "Kintu Peter is a Senior AI Systems Architect and Founder specializing in LLM-powered agents, scalable intelligent platforms (like Nakintu AI), and digital infrastructure for the African economy."
+              keywords: ["nakintu ai", "learnflow", "education"],
+              response: "Nakintu AI is a specialized educational ecosystem featuring AI tutoring, automated report generation, and multilingual learning tools designed for high accessibility."
           },
           {
-              keywords: ["nakintu", "learnflow", "education", "tutor", "report"],
-              response: "Nakintu AI (formerly LearnFlow AI) is a specialized educational ecosystem featuring AI tutoring, automated report generation, and multilingual learning tools."
+              keywords: ["africana ai", "ecommerce", "negotiation", "tiktok"],
+              response: "Africana AI is an intelligent economic engine utilizing autonomous agents for real-time price negotiation and seamless TikTok-to-AI e-commerce workflows."
           },
           {
-              keywords: ["africana", "ecommerce", "negotiation", "tiktok", "shop", "selling"],
-              response: "Africana AI is an intelligent economic engine utilizing autonomous agents for real-time price negotiation and TikTok-integrated e-commerce workflows."
+              keywords: ["skills", "expertise", "tech stack", "languages"],
+              response: "His core technical stack includes AI/ML (Transformers, RAG, Fine-tuning), Mobile (Flutter, USSD), Backend (Django, Python), and Web3 (Solidity)."
           },
           {
-              keywords: ["skills", "expertise", "tech stack", "languages", "flutter", "python", "django", "web3", "ussd"],
-              response: "Peter's core technical stack includes AI/ML (Transformers, RAG), Mobile (Flutter, USSD), Backend (Django, Python), and Web3 (Solidity)."
-          },
-          {
-              keywords: ["contact", "email", "whatsapp", "hire", "reach", "phone", "number", "call", "talk", "message"],
-              response: "You can reach Peter directly via WhatsApp at +256 789 746 493 or via email at kintupeter7@gmail.com for consultations or partnerships."
+              keywords: ["contact", "email", "whatsapp", "hire", "reach"],
+              response: "You can reach Peter at kintupeter7@gmail.com or via WhatsApp at +256 789 746 493 for technical consultations or partnerships."
           }
       ];
 
@@ -54,27 +47,52 @@
           chatWindow.scrollTop = chatWindow.scrollHeight;
       }
 
-      const handleChat = (query) => {
-          const input = query.toLowerCase();
+      const handleChat = async (query) => {
           let response = null;
+          const lowerCaseQuery = query.toLowerCase();
 
-          // Search the local database for broad keyword matches
           for (const item of localKnowledge) {
-              const match = item.keywords.some(key => input.includes(key));
-              if (match) {
+              if (item.keywords.some(keyword => lowerCaseQuery.includes(keyword))) {
                   response = item.response;
                   break;
               }
           }
 
-          // Strict Fallback Protocol
           if (!response) {
-              response = "I don't have a specific local record for that query. For detailed information, please contact Peter directly on WhatsApp at +256 789 746 493 or via email at kintupeter7@gmail.com.";
+              displayMessage("Querying neural network...", false);
+              try {
+                  response = await callGeminiAPI(query);
+              } catch (error) {
+                  response = "System maintenance in progress. Please refer to the 'Architecture' page for technical details.";
+              }
           }
           
-          displayMessage(response, false);
+          const messages = document.querySelectorAll('.bot-message');
+          const lastMsg = messages[messages.length - 1];
+          if (lastMsg && lastMsg.textContent === "Querying neural network...") {
+              lastMsg.textContent = response;
+          } else {
+              displayMessage(response, false);
+          }
       };
 
+      const callGeminiAPI = async (userPrompt) => {
+          const apiKey = "AIzaSyCVj9c7qbPqq_3R9WgWbaRmQ6WQT3-c7CA"; 
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+          const payload = {
+              contents: [{ parts: [{ text: `Context: You are the AI twin of Kintu Peter, an AI Architect. Be professional, concise, and focused on his work in Nakintu AI and Africana AI. Query: ${userPrompt}` }] }]
+          };
+
+          const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+          });
+
+          const result = await response.json();
+          return result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm currently offline, but feel free to explore the project case studies!";
+      };
+      
       window.onload = function() {
           const chatToggle = document.getElementById('chat-toggle');
           const chatContainer = document.getElementById('chat-container');
@@ -88,8 +106,7 @@
               if (query) {
                   displayMessage(query, true);
                   chatInput.value = '';
-                  // Simulate brief processing
-                  setTimeout(() => handleChat(query), 300);
+                  handleChat(query);
               }
           };
 
@@ -107,7 +124,7 @@
             --text-main: #ffffff;
             --text-dim: #94a3b8;
             --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.08);
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -122,78 +139,162 @@
 
         /* Desktop Navbar */
         .navbar {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 1100px; padding: 12px 40px;
-            background: rgba(13, 13, 18, 0.7); backdrop-filter: blur(16px);
-            border: 1px solid var(--border); border-radius: 100px;
-            display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            padding: 15px 40px;
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
         }
 
-        .logo { font-size: 1.1rem; font-weight: 800; color: var(--text-main); text-decoration: none; }
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
         .logo span { color: var(--accent); }
 
         .nav-links { list-style: none; display: flex; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--text-dim); font-size: 0.85rem; font-weight: 600; }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
         .nav-links a:hover, .nav-links li.active a { color: var(--accent); }
 
-        /* Hero */
+        /* Hero Section */
         .hero {
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: radial-gradient(circle at 50% -20%, var(--accent-glow), transparent 60%);
-            padding: 120px 10% 100px; text-align: center;
+            padding: 120px 10% 80px;
+            text-align: center;
         }
 
-        h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 25px; }
-        .gradient-text { background: linear-gradient(90deg, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { color: var(--text-dim); font-size: 1.1rem; max-width: 700px; margin: 0 auto 40px; }
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.8rem);
+            font-weight: 800;
+            letter-spacing: -3px;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
 
-        .btn-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .btn { padding: 14px 30px; border-radius: 100px; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: 0.4s; }
-        .btn-primary { background: var(--text-main); color: var(--bg); }
+        .gradient-text {
+            background: linear-gradient(90deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-dim);
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto 45px;
+        }
+
+        .btn-group { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+
+        .btn {
+            padding: 16px 35px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: 0.4s;
+        }
+
+        .btn-primary { background: var(--text-main); color: var(--bg); box-shadow: 0 10px 30px var(--accent-glow); }
         .btn-secondary { border: 1px solid var(--border); color: var(--text-main); background: var(--glass); }
 
-        .profile-container { margin-top: 50px; }
-        .profile-img { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border); box-shadow: 0 0 40px var(--accent-glow); }
-
-        /* Mobile Nav */
-        .mobile-nav { display: none; }
-
-        @media (max-width: 768px) {
-            .navbar { width: 95%; top: 10px; padding: 10px 20px; justify-content: center; }
-            .nav-links { display: none; }
-            .mobile-nav {
-                display: flex; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-                width: 90%; background: rgba(13, 13, 18, 0.85); backdrop-filter: blur(20px);
-                border: 1px solid var(--border); border-radius: 24px; padding: 12px 0;
-                justify-content: space-around; z-index: 2000;
-            }
-            .mobile-nav a { color: var(--text-dim); text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
-            .mobile-nav a span { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; }
-            .mobile-nav a.active { color: var(--accent); }
-            #chat-toggle { bottom: 95px !important; }
-            #chat-container { width: 95%; right: 2.5%; bottom: 160px; height: 50vh; }
+        .profile-container { margin-top: 60px; position: relative; display: inline-block; }
+        .profile-img {
+            width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
+            border: 4px solid var(--card-bg); box-shadow: 0 0 50px var(--accent-glow);
         }
 
-        /* Chatbot */
+        /* Chatbot UI */
         #chat-toggle {
             position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
             background: var(--accent); border: none; border-radius: 50%; color: var(--bg);
-            font-size: 1.8rem; cursor: pointer; z-index: 3000; box-shadow: 0 10px 25px var(--accent-glow);
+            font-size: 1.8rem; cursor: pointer; z-index: 2000; box-shadow: 0 15px 35px var(--accent-glow);
         }
+
         #chat-container {
-            position: fixed; bottom: 110px; right: 30px; width: 350px; height: 500px;
-            background: var(--card-bg); border-radius: 24px; display: none; flex-direction: column;
-            border: 1px solid var(--border); z-index: 2999; overflow: hidden;
+            position: fixed; bottom: 110px; right: 30px; width: 380px; height: 520px;
+            background: var(--card-bg); border-radius: 28px; display: none; flex-direction: column;
+            border: 1px solid var(--border); z-index: 1999; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
+
         #chat-container.open { display: flex; }
-        .chat-header { background: var(--accent); color: var(--bg); padding: 15px; font-weight: 800; font-size: 0.75rem; text-align: center; }
-        #chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
-        .message { padding: 10px 15px; border-radius: 15px; font-size: 0.85rem; max-width: 85%; }
-        .bot-message { background: var(--glass); align-self: flex-start; border-bottom-left-radius: 2px; }
-        .user-message { background: var(--accent); color: var(--bg); align-self: flex-end; border-bottom-right-radius: 2px; }
-        .chat-input-container { padding: 15px; display: flex; gap: 10px; border-top: 1px solid var(--border); }
-        #chat-input { flex: 1; background: transparent; border: 1px solid var(--border); border-radius: 10px; padding: 10px; color: #fff; outline: none; }
-        #send-button { background: var(--accent); border: none; border-radius: 10px; width: 40px; color: var(--bg); cursor: pointer; }
+
+        /* Media Queries & Mobile Fixes */
+        @media (max-width: 768px) {
+            .navbar { width: 95%; padding: 12px 20px; top: 10px; }
+            
+            /* Hidden on mobile to use the Bottom Tab Bar instead */
+            .nav-links { display: none; } 
+
+            .hero { padding-top: 100px; padding-bottom: 120px; }
+            h1 { font-size: 2.8rem; letter-spacing: -1px; }
+            .hero p { font-size: 1.1rem; }
+            
+            .profile-img { width: 150px; height: 150px; }
+
+            /* Mobile Navigation Tab Bar (Bottom) */
+            .mobile-nav {
+                display: flex !important;
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 85%;
+                background: rgba(13, 13, 18, 0.9);
+                backdrop-filter: blur(20px);
+                border: 1px solid var(--border);
+                border-radius: 30px;
+                padding: 12px 20px;
+                justify-content: space-around;
+                z-index: 3000;
+                box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+            }
+
+            .mobile-nav a {
+                color: var(--text-dim);
+                text-decoration: none;
+                font-size: 1.4rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .mobile-nav a span { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
+            .mobile-nav a.active { color: var(--accent); }
+
+            #chat-toggle { bottom: 100px; right: 20px; width: 55px; height: 55px; }
+            #chat-container { width: 90%; right: 5%; bottom: 170px; height: 50vh; }
+        }
+
+        .mobile-nav { display: none; }
     </style>
 </head>
 <body>
@@ -212,12 +313,14 @@
             <p>
                 Engineering high-impact AI agents and scalable digital infrastructure. Founder of **Nakintu AI** and **Africana AI**.
             </p>
+
             <div class="btn-group">
                 <a href="portfolio.html" class="btn btn-primary">Explore Case Studies</a>
                 <a href="https://github.com/Peter-Kintu" target="_blank" class="btn btn-secondary">
                     <i class="bx bxl-github"></i> Repository Engine
                 </a>
             </div>
+
             <div class="profile-container">
                 <img src="peter.jpg" alt="Kintu Peter" class="profile-img" />
             </div>
@@ -231,16 +334,16 @@
     </div>
 
     <div id="chat-container">
-        <div class="chat-header">SYSTEM CORE V3.0 LOCAL</div>
+        <div class="chat-header">SYSTEM CORE V2.5 ONLINE</div>
         <div id="chat-messages">
-            <div class="message bot-message">Link established. How may I assist you with Peter's work today?</div>
+            <div class="message bot-message">Link established. I am the digital representative for Peter's AI architectures. How may I assist?</div>
         </div>
         <div class="chat-input-container">
-            <input type="text" id="chat-input" placeholder="Query Peter's background..." />
+            <input type="text" id="chat-input" placeholder="Query Nakintu AI..." />
             <button id="send-button"><i class="bx bxs-send"></i></button>
         </div>
     </div>
     
-    <button id="chat-toggle" title="Open Assistant"><i class="bx bx-bot"></i></button>
+    <button id="chat-toggle" title="Open AI Assistant"><i class="bx bx-bot"></i></button>
 </body>
 </html>
