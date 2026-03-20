@@ -14,26 +14,26 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
     <script>
-      // Professional Knowledge Base
+      // Professional Knowledge Base - Purely Offline
       const localKnowledge = [
           {
-              keywords: ["who is kintu peter", "about", "developer", "background"],
+              keywords: ["who is", "kintu", "peter", "about", "developer", "background", "architect", "founder"],
               response: "Kintu Peter is a Senior AI Systems Architect and Founder specializing in LLM-powered agents, scalable intelligent platforms, and infrastructure for the African digital economy."
           },
           {
-              keywords: ["nakintu ai", "learnflow", "education"],
+              keywords: ["nakintu ai", "learnflow", "education", "tutor", "school"],
               response: "Nakintu AI is a specialized educational ecosystem featuring AI tutoring, automated report generation, and multilingual learning tools designed for high accessibility."
           },
           {
-              keywords: ["africana ai", "ecommerce", "negotiation", "tiktok"],
+              keywords: ["africana ai", "ecommerce", "negotiation", "tiktok", "market"],
               response: "Africana AI is an intelligent economic engine utilizing autonomous agents for real-time price negotiation and seamless TikTok-to-AI e-commerce workflows."
           },
           {
-              keywords: ["skills", "expertise", "tech stack", "languages"],
+              keywords: ["skills", "expertise", "tech stack", "languages", "python", "flutter", "blockchain", "solidity"],
               response: "His core technical stack includes AI/ML (Transformers, RAG, Fine-tuning), Mobile (Flutter, USSD), Backend (Django, Python), and Web3 (Solidity)."
           },
           {
-              keywords: ["contact", "email", "whatsapp", "hire", "reach"],
+              keywords: ["contact", "email", "whatsapp", "hire", "reach", "call", "number", "talk"],
               response: "You can reach Peter at kintupeter7@gmail.com or via WhatsApp at +256 789 746 493 for technical consultations or partnerships."
           }
       ];
@@ -47,10 +47,11 @@
           chatWindow.scrollTop = chatWindow.scrollHeight;
       }
 
-      const handleChat = async (query) => {
+      const handleChat = (query) => {
           let response = null;
           const lowerCaseQuery = query.toLowerCase();
 
+          // Search the local array for keyword matches
           for (const item of localKnowledge) {
               if (item.keywords.some(keyword => lowerCaseQuery.includes(keyword))) {
                   response = item.response;
@@ -58,39 +59,15 @@
               }
           }
 
+          // Fallback if no keywords match
           if (!response) {
-              displayMessage("Querying neural network...", false);
-              try {
-                  response = await callGeminiAPI(query);
-              } catch (error) {
-                  response = "System maintenance in progress. Please refer to the 'Architecture' page for technical details.";
-              }
+              response = "I don't have a specific internal record for that. Please contact Peter directly via WhatsApp at +256789746493 or email kintupeter7@gmail.com for more details.";
           }
           
-          const messages = document.querySelectorAll('.bot-message');
-          const lastMsg = messages[messages.length - 1];
-          if (lastMsg && lastMsg.textContent === "Querying neural network...") {
-              lastMsg.textContent = response;
-          } else {
+          // Slight delay to simulate "processing" for better UX
+          setTimeout(() => {
               displayMessage(response, false);
-          }
-      };
-
-      const callGeminiAPI = async (userPrompt) => {
-          const apiKey = "AIzaSyCVj9c7qbPqq_3R9WgWbaRmQ6WQT3-c7CA"; 
-          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-          const payload = {
-              contents: [{ parts: [{ text: `Context: You are the AI twin of Kintu Peter, an AI Architect. Be professional, concise, and focused on his work in Nakintu AI and Africana AI. Query: ${userPrompt}` }] }]
-          };
-
-          const response = await fetch(apiUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload)
-          });
-
-          const result = await response.json();
-          return result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm currently offline, but feel free to explore the project case studies!";
+          }, 500);
       };
       
       window.onload = function() {
@@ -137,7 +114,6 @@
             line-height: 1.6;
         }
 
-        /* World-Class Glass Navbar */
         .navbar {
             position: fixed;
             top: 20px;
@@ -179,14 +155,13 @@
 
         .nav-links a:hover, .nav-links li.active a { color: var(--accent); }
 
-        /* Hero Section Fixes */
         .hero {
-            min-height: 100vh; /* Changed from height to min-height to allow scrolling */
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             background: radial-gradient(circle at 50% -20%, var(--accent-glow), transparent 60%);
-            padding: 120px 10% 60px; /* Added top padding to clear the navbar */
+            padding: 120px 10% 60px;
             text-align: center;
         }
 
@@ -211,7 +186,6 @@
             margin: 0 auto 45px;
         }
 
-        /* Buttons */
         .btn-group { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
 
         .btn {
@@ -237,7 +211,6 @@
 
         .btn:hover { transform: translateY(-5px); filter: brightness(1.1); }
 
-        /* Profile Aesthetic */
         .profile-container { margin-top: 60px; position: relative; display: inline-block; }
         
         .profile-img {
@@ -249,7 +222,6 @@
             box-shadow: 0 0 50px var(--accent-glow);
         }
 
-        /* Chatbot Interface */
         #chat-toggle {
             position: fixed;
             bottom: 30px;
