@@ -14,27 +14,31 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
     <script>
-      // Professional Knowledge Base - Purely Offline
+      // Professional Knowledge Base - Optimized with Greetings
       const localKnowledge = [
+          {
+              keywords: ["hi", "hello", "hey", "greetings", "morning", "evening", "test"],
+              response: "Link established. I am Peter's digital twin. You can ask me about Nakintu AI, Africana AI, his technical skills, or how to contact him."
+          },
           {
               keywords: ["who is", "kintu", "peter", "about", "developer", "background", "architect", "founder"],
               response: "Kintu Peter is a Senior AI Systems Architect and Founder specializing in LLM-powered agents, scalable intelligent platforms, and infrastructure for the African digital economy."
           },
           {
-              keywords: ["nakintu ai", "learnflow", "education", "tutor", "school"],
+              keywords: ["nakintu ai", "learnflow", "education", "tutor", "school", "multilingual"],
               response: "Nakintu AI is a specialized educational ecosystem featuring AI tutoring, automated report generation, and multilingual learning tools designed for high accessibility."
           },
           {
-              keywords: ["africana ai", "ecommerce", "negotiation", "tiktok", "market"],
+              keywords: ["africana ai", "ecommerce", "negotiation", "tiktok", "market", "agent"],
               response: "Africana AI is an intelligent economic engine utilizing autonomous agents for real-time price negotiation and seamless TikTok-to-AI e-commerce workflows."
           },
           {
-              keywords: ["skills", "expertise", "tech stack", "languages", "python", "flutter", "blockchain", "solidity"],
+              keywords: ["skills", "expertise", "tech stack", "languages", "python", "flutter", "blockchain", "solidity", "ussd"],
               response: "His core technical stack includes AI/ML (Transformers, RAG, Fine-tuning), Mobile (Flutter, USSD), Backend (Django, Python), and Web3 (Solidity)."
           },
           {
               keywords: ["contact", "email", "whatsapp", "hire", "reach", "call", "number", "talk"],
-              response: "You can reach Peter at kintupeter7@gmail.com or via WhatsApp at +256 789 746 493 for technical consultations or partnerships."
+              response: "You can reach Peter directly at kintupeter7@gmail.com or via WhatsApp at +256 789 746 493 for technical consultations."
           }
       ];
 
@@ -51,7 +55,7 @@
           let response = null;
           const lowerCaseQuery = query.toLowerCase();
 
-          // Search the local array for keyword matches
+          // Search for keyword matches
           for (const item of localKnowledge) {
               if (item.keywords.some(keyword => lowerCaseQuery.includes(keyword))) {
                   response = item.response;
@@ -59,15 +63,13 @@
               }
           }
 
-          // Fallback if no keywords match
           if (!response) {
-              response = "I don't have a specific internal record for that. Please contact Peter directly via WhatsApp at +256789746493 or email kintupeter7@gmail.com for more details.";
+              response = "I'm not sure about that specific detail. For project inquiries or collaborations, please contact Peter directly at +256789746493 or kintupeter7@gmail.com.";
           }
           
-          // Slight delay to simulate "processing" for better UX
           setTimeout(() => {
               displayMessage(response, false);
-          }, 500);
+          }, 400);
       };
       
       window.onload = function() {
