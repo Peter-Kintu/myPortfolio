@@ -3,135 +3,277 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Kintu Peter – Website & App Developer</title>
+  <title>About Kintu Peter | AI Systems Architect</title>
+  <meta name="description" content="Professional profile of Kintu Peter, Founder and Lead Architect specializing in LLMs, Flutter, and Autonomous Systems." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    :root {
+      --bg: #050508;
+      --card-bg: #0d0d12;
+      --accent: #00d2ff;
+      --accent-glow: rgba(0, 210, 255, 0.15);
+      --text-main: #ffffff;
+      --text-dim: #94a3b8;
+      --glass: rgba(255, 255, 255, 0.03);
+      --border: rgba(255, 255, 255, 0.08);
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background-color: #1f242d;
-      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.8;
+      overflow-x: hidden;
     }
 
+    /* Unified Glass Navbar */
     .navbar {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 1200px;
+      padding: 15px 40px;
+      background: rgba(5, 5, 8, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 100px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 30px;
-      background-color: #1f242d;
-      border-bottom: 1px solid #333;
+      z-index: 1000;
     }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #00abf0;
+    .navbar .logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
       text-decoration: none;
+      letter-spacing: -1px;
     }
 
-    .navbar ul {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-    }
+    .navbar .logo span { color: var(--accent); }
 
-    .navbar ul li a {
-      color: #fff;
+    .nav-links { list-style: none; display: flex; gap: 30px; }
+
+    .nav-links a {
       text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: 0.3s;
     }
 
-    .navbar ul li a:hover,
-    .navbar ul li.active a {
-      color: #00abf0;
+    .nav-links a:hover, .nav-links li.active a { color: var(--accent); }
+
+    /* Layout */
+    .about-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 160px 5% 100px;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 80px;
+      align-items: start;
     }
 
-    .about {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      padding: 60px 20px;
-      background-color: #2c2f3f;
-    }
-
-    .about-info {
-      max-width: 700px;
-      padding: 20px;
-    }
-
-    .about-info h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #00abf0;
-    }
-
-    .about-info p {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin-bottom: 20px;
-      color: #ccc;
+    .about-visual {
+      position: sticky;
+      top: 140px;
     }
 
     .about-img {
-      max-width: 300px;
-      margin: 20px;
-      border-radius: 50%;
+      width: 100%;
+      border-radius: 40px;
       overflow: hidden;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      position: relative;
     }
 
     .about-img img {
       width: 100%;
-      height: auto;
       display: block;
-      object-fit: cover;
+      filter: grayscale(20%);
+      transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    @media (max-width: 768px) {
-      .about {
-        flex-direction: column;
-        text-align: center;
-      }
+    .about-img:hover img {
+      filter: grayscale(0%);
+      transform: scale(1.03);
+    }
 
-      .about-info h1 {
-        font-size: 2rem;
-      }
+    .status-card {
+      margin-top: 30px;
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      position: relative;
+    }
 
-      .about-info p {
-        font-size: 1rem;
-      }
+    .status-card h4 { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+    .status-card p { font-size: 0.95rem; color: var(--text-dim); margin: 0; }
+
+    /* Content Styling */
+    .about-info h1 {
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 30px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #fff, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .about-info p {
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      margin-bottom: 25px;
+    }
+
+    .about-info strong { color: #fff; font-weight: 600; }
+
+    /* Tech Grid */
+    .tech-section { margin-top: 50px; }
+    .tech-section h3 { font-size: 1.25rem; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 15px;
+    }
+
+    .tech-item {
+      background: var(--glass);
+      padding: 20px 10px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .tech-item:hover {
+      border-color: var(--accent);
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-5px);
+    }
+
+    .tech-item i {
+      font-size: 2rem;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .tech-item span {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 40px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1rem;
+      gap: 10px;
+      transition: 0.3s;
+    }
+
+    .contact-link:hover { gap: 20px; color: #fff; }
+
+    @media (max-width: 992px) {
+      .about-container { grid-template-columns: 1fr; padding-top: 120px; }
+      .about-visual { position: static; max-width: 500px; margin: 0 auto 40px; }
+      .navbar { padding: 12px 25px; }
     }
   </style>
 </head>
 <body>
+
   <nav class="navbar">
-    <a href="#" class="logo">Kintu Peter</a>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li class="active"><a href="about.html">About</a></li>
-      <li><a href="portfolio.html">My projects</a></li>
+    <a href="index.html" class="logo">KP<span>.ARCHITECT</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Intelligence</a></li>
+      <li class="active"><a href="about.html">Architecture</a></li>
+      <li><a href="portfolio.html">Ecosystems</a></li>
     </ul>
   </nav>
 
-  <section class="about">
-    <div class="about-img">
-      <img src="peter.jpg" alt="Kintu Peter" />
-    </div>
+  <main class="about-container">
+    <aside class="about-visual">
+      <div class="about-img">
+        <img src="peter.jpg" alt="Kintu Peter" />
+      </div>
+      <div class="status-card">
+        <h4>Senior Architect</h4>
+        <p>Leading Decentralized & AI Infrastructure at <strong>Nakintu AI</strong>.</p>
+      </div>
+    </aside>
 
-    <div class="about-info">
-      <h1>About Me</h1>
-      <p>I’m a passionate full stack developer with a strong focus on mobile and web technologies. Over the years, I’ve built intuitive apps, scalable platforms, and elegant websites that solve real-world problems and elevate user experiences.</p>
-      <p>My expertise spans Flutter, Django, React, C# .NET, and AI integration. I thrive in every stage of the development lifecycle—from wireframing and prototyping to deployment and optimization.</p>
-      <p>Driven by curiosity and a love for innovation, I continuously explore new tools and frameworks to stay ahead of the curve. If you're looking for a creative, reliable, and forward-thinking developer, I’d love to collaborate.</p>
-    </div>
-  </section>
+    <article class="about-info">
+      <h1>Architecting <span class="gradient-text">Scalable Intelligence</span></h1>
+      
+      <p>I am <strong>Kintu Peter</strong>, an AI Systems Architect based in Uganda. My methodology centers on the engineering of <strong>Autonomous Agents</strong> and the deployment of high-performance mobile ecosystems that bridge the gap between technical complexity and regional utility.</p>
+      
+      <p>As the founder of <strong>Nakintu AI</strong> (formerly LearnFlow AI) and <strong>Africana AI</strong>, I specialize in building multimodal learning tools and intelligent e-commerce engines. My focus is on creating systems that leverage <strong>LLMs</strong> to automate complex human interactions—from real-time price negotiations to personalized AI tutoring.</p>
+
+      <p>I thrive at the intersection of <strong>Cross-Platform Performance</strong> (Flutter), <strong>Distributed Ledger Security</strong> (Web3), and <strong>Agentic AI</strong>. My goal is to architect the future of the African digital economy through accessible, intelligent infrastructure.</p>
+
+      <section class="tech-section">
+        <h3>Technical Arsenal</h3>
+        <div class="tech-grid">
+          <div class="tech-item">
+            <i class='bx bx-brain'></i>
+            <span>AI / LLMs</span>
+          </div>
+          <div class="tech-item">
+            <i class='bx bx-mobile-alt'></i>
+            <span>Flutter & Dart</span>
+          </div>
+          <div class="tech-item">
+            <i class='bx bx-link-external'></i>
+            <span>Web3 / Solidity</span>
+          </div>
+          <div class="tech-item">
+            <i class='bx bxl-python'></i>
+            <span>Django / Python</span>
+          </div>
+          <div class="tech-item">
+            <i class='bx bx-server'></i>
+            <span>PostgreSQL</span>
+          </div>
+          <div class="tech-item">
+            <i class='bx bx-terminal'></i>
+            <span>C# .NET</span>
+          </div>
+        </div>
+      </section>
+
+      <p style="margin-top: 50px;">Beyond infrastructure, I serve as a <strong>Tech Mentor</strong> at MIT App Inventor Outreach Uganda, empowering the next generation of developers to build resilient, community-focused technology.</p>
+      
+      <a href="mailto:kintupeter7@gmail.com" class="contact-link">
+        Inquire for Systems Design & Collaboration <i class="bx bx-right-arrow-alt"></i>
+      </a>
+    </article>
+  </main>
+
 </body>
 </html>

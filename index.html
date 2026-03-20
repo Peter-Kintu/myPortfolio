@@ -7,40 +7,41 @@
     <meta name="description" content="Portfolio of Kintu Peter, an AI Engineer and Systems Architect specializing in LLMs, Flutter, and Blockchain." />
     <meta name="keywords" content="Kintu Peter, AI Engineer, LLM Engineer, Flutter, Blockchain, Nakintu AI, Africana AI, Uganda Developer" />
     <meta name="author" content="Kintu Peter" />
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
     <script>
-      // Enhanced Knowledge Base including new AI Platforms
+      // Professional Knowledge Base
       const localKnowledge = [
           {
-              keywords: ["who is kintu peter", "about", "developer"],
-              response: "Kintu Peter is an AI Systems Architect and Full Stack Developer specializing in LLM-powered applications, autonomous agents, and scalable intelligent platforms."
+              keywords: ["who is kintu peter", "about", "developer", "background"],
+              response: "Kintu Peter is a Senior AI Systems Architect and Founder specializing in LLM-powered agents, scalable intelligent platforms, and infrastructure for the African digital economy."
           },
           {
-              keywords: ["nakintu ai", "learnflow"],
-              response: "Nakintu AI (formerly LearnFlow AI) is Kintu's flagship educational platform featuring AI tutoring, automated report generation, and multilingual learning tools."
+              keywords: ["nakintu ai", "learnflow", "education"],
+              response: "Nakintu AI is a specialized educational ecosystem featuring AI tutoring, automated report generation, and multilingual learning tools designed for high accessibility."
           },
           {
-              keywords: ["africana ai", "ecommerce", "negotiation"],
-              response: "Africana AI is an intelligent economic engine built by Peter that uses AI agents for real-time price negotiation and automated e-commerce workflows."
+              keywords: ["africana ai", "ecommerce", "negotiation", "tiktok"],
+              response: "Africana AI is an intelligent economic engine utilizing autonomous agents for real-time price negotiation and seamless TikTok-to-AI e-commerce workflows."
           },
           {
-              keywords: ["skills", "expertise", "tech stack"],
-              response: "His core expertise includes AI/ML (Transformers, Fine-tuning), Mobile (Flutter), Backend (Django, Python), and Web3 (Solidity, Smart Contracts)."
+              keywords: ["skills", "expertise", "tech stack", "languages"],
+              response: "His core technical stack includes AI/ML (Transformers, RAG, Fine-tuning), Mobile (Flutter, USSD), Backend (Django, Python), and Web3 (Solidity)."
           },
           {
-              keywords: ["contact", "email", "whatsapp", "hire"],
-              response: "You can reach Peter at kintupeter7@gmail.com or via WhatsApp at +256 789 746 493."
+              keywords: ["contact", "email", "whatsapp", "hire", "reach"],
+              response: "You can reach Peter at kintupeter7@gmail.com or via WhatsApp at +256 789 746 493 for technical consultations or partnerships."
           }
       ];
 
       function displayMessage(text, isUser = false) {
           const chatWindow = document.getElementById('chat-messages');
           const messageElement = document.createElement('div');
-          messageElement.classList.add('message');
-          messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
+          messageElement.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
           messageElement.textContent = text;
           chatWindow.appendChild(messageElement);
           chatWindow.scrollTop = chatWindow.scrollHeight;
@@ -58,17 +59,17 @@
           }
 
           if (!response) {
-              displayMessage("Consulting AI brain...", false);
+              displayMessage("Querying neural network...", false);
               try {
                   response = await callGeminiAPI(query);
               } catch (error) {
-                  response = "I'm currently optimizing my circuits. Please try again shortly!";
+                  response = "System maintenance in progress. Please refer to the 'Architecture' page for technical details.";
               }
           }
           
           const messages = document.querySelectorAll('.bot-message');
           const lastMsg = messages[messages.length - 1];
-          if (lastMsg && lastMsg.textContent === "Consulting AI brain...") {
+          if (lastMsg && lastMsg.textContent === "Querying neural network...") {
               lastMsg.textContent = response;
           } else {
               displayMessage(response, false);
@@ -76,10 +77,10 @@
       };
 
       const callGeminiAPI = async (userPrompt) => {
-          const apiKey = "AIzaSyCVj9c7qbPqq_3R9WgWbaRmQ6WQT3-c7CA";
+          const apiKey = "AIzaSyCVj9c7qbPqq_3R9WgWbaRmQ6WQT3-c7CA"; // Note: Secure this in a backend for production
           const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
           const payload = {
-              contents: [{ parts: [{ text: `You are the AI assistant for Kintu Peter's portfolio. He is an AI Engineer and Founder of Nakintu AI. Answer this concisely: ${userPrompt}` }] }]
+              contents: [{ parts: [{ text: `Context: You are the AI twin of Kintu Peter, an AI Architect. Be professional, concise, and focused on his work in Nakintu AI and Africana AI. Query: ${userPrompt}` }] }]
           };
 
           const response = await fetch(apiUrl, {
@@ -89,7 +90,7 @@
           });
 
           const result = await response.json();
-          return result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm here to help with questions about Peter's work!";
+          return result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm currently offline, but feel free to explore the project case studies!";
       };
       
       window.onload = function() {
@@ -113,180 +114,185 @@
           chatInput.addEventListener('keypress', (e) => e.key === 'Enter' && sendMessage());
       };
     </script>
+
     <style>
         :root {
-            --bg-dark: #0a0a0c;
-            --accent-blue: #00d2ff;
-            --accent-purple: #9d50bb;
+            --bg: #050508;
+            --card-bg: #0d0d12;
+            --accent: #00d2ff;
+            --accent-glow: rgba(0, 210, 255, 0.3);
             --text-main: #ffffff;
-            --text-dim: #a1a1aa;
+            --text-dim: #94a3b8;
             --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
         }
         
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
             color: var(--text-main);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
+        /* World-Class Glass Navbar */
         .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            padding: 15px 40px;
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 100px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 10%;
-            background: rgba(10, 10, 12, 0.8);
-            backdrop-filter: blur(15px);
-            position: fixed;
-            width: 100%;
-            box-sizing: border-box;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 800;
-            color: var(--accent-blue);
+            color: var(--text-main);
             text-decoration: none;
+            letter-spacing: -1px;
         }
 
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 30px;
-        }
+        .logo span { color: var(--accent); }
+
+        .nav-links { list-style: none; display: flex; gap: 30px; }
 
         .nav-links a {
             text-decoration: none;
             color: var(--text-dim);
-            font-weight: 500;
+            font-size: 0.9rem;
+            font-weight: 600;
             transition: 0.3s;
         }
 
-        .nav-links a:hover, .nav-links li.active a {
-            color: white;
-        }
+        .nav-links a:hover, .nav-links li.active a { color: var(--accent); }
 
+        /* Hero Section */
         .hero {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle at top right, rgba(157, 80, 187, 0.1), transparent),
-                        radial-gradient(circle at bottom left, rgba(0, 210, 255, 0.1), transparent);
+            background: radial-gradient(circle at 50% -20%, var(--accent-glow), transparent 60%);
             padding: 0 10%;
             text-align: center;
         }
 
         h1 {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-size: clamp(2.5rem, 8vw, 4.8rem);
             font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 20px;
+            letter-spacing: -3px;
+            line-height: 1;
+            margin-bottom: 25px;
         }
 
         .gradient-text {
-            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            background: linear-gradient(90deg, #fff, var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero p {
             color: var(--text-dim);
-            font-size: 1.2rem;
-            max-width: 750px;
-            margin: 0 auto 40px;
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto 45px;
         }
 
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+        /* Buttons */
+        .btn-group { display: flex; justify-content: center; gap: 20px; }
 
         .btn {
-            padding: 16px 32px;
-            border-radius: 12px;
+            padding: 16px 35px;
+            border-radius: 100px;
             text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .btn-primary {
-            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
-            color: white;
+            background: var(--text-main);
+            color: var(--bg);
+            box-shadow: 0 10px 30px var(--accent-glow);
         }
 
         .btn-secondary {
-            border: 1px solid var(--text-dim);
-            color: white;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            background: var(--glass);
         }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
+        .btn:hover { transform: translateY(-5px); filter: brightness(1.1); }
 
-        .img-box {
-            width: 280px;
-            height: 280px;
-            margin-top: 50px;
-            border-radius: 50%;
-            padding: 10px;
-            background: linear-gradient(var(--accent-blue), var(--accent-purple));
-        }
-
+        /* Profile Aesthetic */
+        .profile-container { margin-top: 60px; position: relative; display: inline-block; }
+        
         .profile-img {
-            width: 100%;
-            height: 100%;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid var(--bg-dark);
+            border: 4px solid var(--card-bg);
+            box-shadow: 0 0 50px var(--accent-glow);
         }
 
-        /* Chatbot UI */
+        /* Chatbot Interface */
         #chat-toggle {
             position: fixed;
             bottom: 30px;
             right: 30px;
             width: 65px;
             height: 65px;
-            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            background: var(--accent);
             border: none;
             border-radius: 50%;
-            color: white;
+            color: var(--bg);
             font-size: 1.8rem;
             cursor: pointer;
             z-index: 2000;
-            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
+            box-shadow: 0 15px 35px var(--accent-glow);
         }
 
         #chat-container {
             position: fixed;
             bottom: 110px;
             right: 30px;
-            width: 360px;
-            height: 500px;
-            background: #121214;
-            border-radius: 20px;
+            width: 380px;
+            height: 520px;
+            background: var(--card-bg);
+            border-radius: 28px;
             display: none;
             flex-direction: column;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--border);
             z-index: 1999;
             overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         #chat-container.open { display: flex; }
 
         .chat-header {
             padding: 20px;
-            background: rgba(255,255,255,0.03);
+            background: var(--glass);
             text-align: center;
-            font-weight: 700;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-weight: 800;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            border-bottom: 1px solid var(--border);
+            color: var(--accent);
         }
 
         #chat-messages {
@@ -295,89 +301,90 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
         }
 
         .message {
-            padding: 12px 16px;
-            border-radius: 15px;
+            padding: 14px 18px;
+            border-radius: 20px;
             max-width: 85%;
             font-size: 0.9rem;
             line-height: 1.5;
         }
 
-        .bot-message { background: var(--glass); align-self: flex-start; }
-        .user-message { background: var(--accent-blue); color: black; align-self: flex-end; font-weight: 500; }
+        .bot-message { background: var(--glass); border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; }
+        .user-message { background: var(--accent); color: var(--bg); align-self: flex-end; font-weight: 700; border-bottom-right-radius: 4px; }
 
         .chat-input-container {
             padding: 20px;
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            background: var(--glass);
+            border-top: 1px solid var(--border);
         }
 
         #chat-input {
             flex: 1;
-            background: var(--glass);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            padding: 10px 15px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 18px;
             color: white;
             outline: none;
+            font-family: inherit;
         }
 
-        #send-button { background: none; border: none; color: var(--accent-blue); font-size: 1.5rem; cursor: pointer; }
+        #send-button { background: none; border: none; color: var(--accent); font-size: 1.6rem; cursor: pointer; }
 
         @media (max-width: 768px) {
+            .navbar { padding: 12px 25px; }
             .nav-links { display: none; }
-            h1 { font-size: 2.8rem; }
-            .hero { padding-top: 100px; }
-            #chat-container { width: calc(100% - 40px); right: 20px; }
+            h1 { font-size: 3rem; }
+            #chat-container { width: calc(100% - 40px); right: 20px; height: 70vh; }
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <a href="#" class="logo">KINTU PETER</a>
+        <a href="index.html" class="logo">KP<span>.ARCHITECT</span></a>
         <ul class="nav-links">
-            <li class="active"><a href="index.html">Home</a></li>
+            <li class="active"><a href="index.html">Intelligence</a></li>
             <li><a href="about.html">Architecture</a></li>
-            <li><a href="portfolio.html">Case Studies</a></li>
+            <li><a href="portfolio.html">Ecosystems</a></li>
         </ul>
     </nav>
 
     <section class="hero">
         <div class="hero-content">
-            <h1>Architecting <span class="gradient-text">Autonomous AI Intelligence</span></h1>
+            <h1>Architecting <br><span class="gradient-text">Autonomous Intelligence</span></h1>
             <p>
-                I am a specialized **AI Systems Architect** building the next generation of LLM-powered agents and scalable intelligent platforms like **Nakintu AI** and **Africana AI**.
+                Engineering high-impact AI agents and scalable digital infrastructure. Founder of **Nakintu AI** and **Africana AI**.
             </p>
 
             <div class="btn-group">
-                <a href="cv.Peter.pdf" class="btn btn-primary" download>📄 Download Technical Thesis (CV)</a>
+                <a href="portfolio.html" class="btn btn-primary">Explore Case Studies</a>
                 <a href="https://github.com/Peter-Kintu" target="_blank" class="btn btn-secondary">
-                    <i class="bx bxl-github"></i> GitHub Engine
+                    <i class="bx bxl-github"></i> Repository Engine
                 </a>
             </div>
 
-            <center>
-                <div class="img-box">
-                    <img src="peter.jpg" alt="Kintu Peter" class="profile-img" />
-                </div>
-            </center>
+            <div class="profile-container">
+                <img src="peter.jpg" alt="Kintu Peter" class="profile-img" />
+            </div>
         </div>
     </section>
 
     <div id="chat-container">
-        <div class="chat-header">SYSTEM INTELLIGENCE V2.5</div>
+        <div class="chat-header">SYSTEM CORE V2.5 ONLINE</div>
         <div id="chat-messages">
-            <div class="message bot-message">Initialization complete. I am Peter's AI representative. How can I assist with your inquiry?</div>
+            <div class="message bot-message">Link established. I am the digital representative for Peter's AI architectures. How may I assist your inquiry?</div>
         </div>
         <div class="chat-input-container">
-            <input type="text" id="chat-input" placeholder="Ask about Nakintu AI or Web3..." />
+            <input type="text" id="chat-input" placeholder="Inquire about Nakintu AI..." />
             <button id="send-button"><i class="bx bxs-send"></i></button>
         </div>
     </div>
     
-    <button id="chat-toggle"><i class="bx bx-bot"></i></button>
+    <button id="chat-toggle" title="Open AI Assistant"><i class="bx bx-bot"></i></button>
 </body>
 </html>
