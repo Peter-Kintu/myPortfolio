@@ -77,7 +77,7 @@
       };
 
       const callGeminiAPI = async (userPrompt) => {
-          const apiKey = "AIzaSyCVj9c7qbPqq_3R9WgWbaRmQ6WQT3-c7CA"; // Note: Secure this in a backend for production
+          const apiKey = "AIzaSyCVj9c7qbPqq_3R9WgWbaRmQ6WQT3-c7CA"; 
           const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
           const payload = {
               contents: [{ parts: [{ text: `Context: You are the AI twin of Kintu Peter, an AI Architect. Be professional, concise, and focused on his work in Nakintu AI and Africana AI. Query: ${userPrompt}` }] }]
@@ -179,14 +179,14 @@
 
         .nav-links a:hover, .nav-links li.active a { color: var(--accent); }
 
-        /* Hero Section */
+        /* Hero Section Fixes */
         .hero {
-            height: 100vh;
+            min-height: 100vh; /* Changed from height to min-height to allow scrolling */
             display: flex;
             align-items: center;
             justify-content: center;
             background: radial-gradient(circle at 50% -20%, var(--accent-glow), transparent 60%);
-            padding: 0 10%;
+            padding: 120px 10% 60px; /* Added top padding to clear the navbar */
             text-align: center;
         }
 
@@ -212,7 +212,7 @@
         }
 
         /* Buttons */
-        .btn-group { display: flex; justify-content: center; gap: 20px; }
+        .btn-group { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
 
         .btn {
             padding: 16px 35px;
@@ -337,10 +337,12 @@
         #send-button { background: none; border: none; color: var(--accent); font-size: 1.6rem; cursor: pointer; }
 
         @media (max-width: 768px) {
-            .navbar { padding: 12px 25px; }
+            .navbar { padding: 12px 25px; width: 95%; top: 10px; }
             .nav-links { display: none; }
-            h1 { font-size: 3rem; }
-            #chat-container { width: calc(100% - 40px); right: 20px; height: 70vh; }
+            .hero { padding-top: 100px; }
+            h1 { font-size: 2.8rem; }
+            .profile-img { width: 140px; height: 140px; }
+            #chat-container { width: calc(100% - 40px); right: 20px; height: 60vh; }
         }
     </style>
 </head>
