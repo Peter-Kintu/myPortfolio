@@ -33,7 +33,7 @@
       overflow-x: hidden;
     }
 
-    /* Unified Glass Navbar */
+    /* Desktop Navbar */
     .navbar {
       position: fixed;
       top: 20px;
@@ -79,7 +79,7 @@
     .about-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 160px 5% 100px;
+      padding: 160px 5% 120px;
       display: grid;
       grid-template-columns: 1fr 1.6fr;
       gap: 80px;
@@ -121,7 +121,7 @@
       position: relative;
     }
 
-    .status-card h4 { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+    .status-card h4 { color: var(--accent); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
     .status-card p { font-size: 0.95rem; color: var(--text-dim); margin: 0; }
 
     /* Content Styling */
@@ -140,7 +140,7 @@
     }
 
     .about-info p {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       color: var(--text-dim);
       margin-bottom: 25px;
     }
@@ -149,7 +149,7 @@
 
     /* Tech Grid */
     .tech-section { margin-top: 50px; }
-    .tech-section h3 { font-size: 1.25rem; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+    .tech-section h3 { font-size: 1.1rem; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
 
     .tech-grid {
       display: grid;
@@ -180,7 +180,7 @@
     }
 
     .tech-item span {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 700;
       letter-spacing: 0.5px;
     }
@@ -199,10 +199,43 @@
 
     .contact-link:hover { gap: 20px; color: #fff; }
 
+    /* Mobile Navigation Tab Bar */
+    .mobile-nav { display: none; }
+
     @media (max-width: 992px) {
       .about-container { grid-template-columns: 1fr; padding-top: 120px; }
       .about-visual { position: static; max-width: 500px; margin: 0 auto 40px; }
-      .navbar { padding: 12px 25px; }
+      .navbar { display: none; }
+      
+      .mobile-nav {
+        display: flex;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 85%;
+        background: rgba(13, 13, 18, 0.9);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border);
+        border-radius: 30px;
+        padding: 12px 20px;
+        justify-content: space-around;
+        z-index: 3000;
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+      }
+
+      .mobile-nav a {
+        color: var(--text-dim);
+        text-decoration: none;
+        font-size: 1.4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .mobile-nav a span { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
+      .mobile-nav a.active { color: var(--accent); }
     }
   </style>
 </head>
@@ -223,19 +256,19 @@
         <img src="peter.jpg" alt="Kintu Peter" />
       </div>
       <div class="status-card">
-        <h4>Senior Architect</h4>
-        <p>Leading Decentralized & AI Infrastructure at <strong>Nakintu AI</strong>.</p>
+        <h4>Senior Systems Architect</h4>
+        <p>Founder and Lead Infrastructure Engineer at <strong>Nakintu AI</strong>.</p>
       </div>
     </aside>
 
     <article class="about-info">
       <h1>Architecting <span class="gradient-text">Scalable Intelligence</span></h1>
       
-      <p>I am <strong>Kintu Peter</strong>, an AI Systems Architect based in Uganda. My methodology centers on the engineering of <strong>Autonomous Agents</strong> and the deployment of high-performance mobile ecosystems that bridge the gap between technical complexity and regional utility.</p>
+      <p>I am <strong>Kintu Peter</strong>, an AI Systems Architect based in Uganda. My methodology centers on the engineering of <strong>Autonomous Agents</strong> and the deployment of high-performance mobile ecosystems that bridge technical complexity with regional accessibility.</p>
       
-      <p>As the founder of <strong>Nakintu AI</strong> (formerly LearnFlow AI) and <strong>Africana AI</strong>, I specialize in building multimodal learning tools and intelligent e-commerce engines. My focus is on creating systems that leverage <strong>LLMs</strong> to automate complex human interactions—from real-time price negotiations to personalized AI tutoring.</p>
+      <p>As the founder of <strong>Nakintu AI</strong> and <strong>Africana AI</strong>, I specialize in building multimodal learning tools and intelligent e-commerce engines. My focus is on creating systems that leverage <strong>LLMs</strong> to automate complex human interactions—from real-time price negotiations to personalized AI tutoring.</p>
 
-      <p>I thrive at the intersection of <strong>Cross-Platform Performance</strong> (Flutter), <strong>Distributed Ledger Security</strong> (Web3), and <strong>Agentic AI</strong>. My goal is to architect the future of the African digital economy through accessible, intelligent infrastructure.</p>
+      <p>I thrive at the intersection of <strong>Cross-Platform Performance</strong> (Flutter), <strong>Distributed Ledger Security</strong> (Web3), and <strong>Agentic AI</strong>. My goal is to architect the future of the digital economy through resilient, intelligent infrastructure.</p>
 
       <section class="tech-section">
         <h3>Technical Arsenal</h3>
@@ -267,13 +300,19 @@
         </div>
       </section>
 
-      <p style="margin-top: 50px;">Beyond infrastructure, I serve as a <strong>Tech Mentor</strong> at MIT App Inventor Outreach Uganda, empowering the next generation of developers to build resilient, community-focused technology.</p>
+      <p style="margin-top: 50px;">Beyond infrastructure, I serve as a <strong>Tech Mentor</strong> at MIT App Inventor Outreach Uganda, empowering developers to build community-focused technology that operates within regional mobile constraints.</p>
       
       <a href="mailto:kintupeter7@gmail.com" class="contact-link">
         Inquire for Systems Design & Collaboration <i class="bx bx-right-arrow-alt"></i>
       </a>
     </article>
   </main>
+
+  <div class="mobile-nav">
+    <a href="index.html"><i class='bx bxs-zap'></i><span>Home</span></a>
+    <a href="about.html" class="active"><i class='bx bxs-layer'></i><span>About</span></a>
+    <a href="portfolio.html"><i class='bx bxs-grid-alt'></i><span>Projects</span></a>
+  </div>
 
 </body>
 </html>
