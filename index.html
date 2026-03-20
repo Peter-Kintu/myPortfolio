@@ -3,33 +3,45 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kintu Peter | AI Systems Architect</title>
+    <title>Kintu Peter | AI Systems Architect & LLM Engineer</title>
+    <meta name="description" content="Portfolio of Kintu Peter, an AI Engineer and Systems Architect specializing in LLMs, Flutter, and Blockchain." />
+    <meta name="keywords" content="Kintu Peter, AI Engineer, LLM Engineer, Flutter, Blockchain, Nakintu AI, Africana AI, Uganda Developer" />
+    <meta name="author" content="Kintu Peter" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
     <script>
+      /**
+       * LOCAL KNOWLEDGE ENGINE (V3.0)
+       * No external APIs. Fully offline keyword matching.
+       */
       const localKnowledge = [
           {
-              // Basic Greetings
-              keywords: ["hello", "hi", "hey", "greetings", "morning", "evening"],
+              keywords: ["hello", "hi", "hey", "greetings", "morning", "evening", "habari"],
               response: "Hello! I am Peter's AI representative. How can I help you learn more about his work in AI and Systems Architecture?"
           },
           {
-              // Broadened keywords for Peter's identity
-              keywords: ["who is", "peter", "kintu", "about", "developer", "background", "who are you"],
+              keywords: ["who is", "peter", "kintu", "about", "developer", "background", "who are you", "who is he"],
               response: "Kintu Peter is a Senior AI Systems Architect and Founder specializing in LLM-powered agents, scalable intelligent platforms (like Nakintu AI), and digital infrastructure for the African economy."
           },
           {
-              keywords: ["nakintu", "learnflow", "education", "tutor"],
-              response: "Nakintu AI is Peter's specialized educational ecosystem. It features AI tutoring, automated report generation, and multilingual tools to make learning more accessible."
+              keywords: ["nakintu", "learnflow", "education", "tutor", "report"],
+              response: "Nakintu AI (formerly LearnFlow AI) is a specialized educational ecosystem featuring AI tutoring, automated report generation, and multilingual learning tools."
           },
           {
-              keywords: ["africana", "ecommerce", "negotiation", "tiktok"],
-              response: "Africana AI is an intelligent economic engine built by Peter that uses autonomous agents for real-time price negotiation and TikTok-to-AI shopping workflows."
+              keywords: ["africana", "ecommerce", "negotiation", "tiktok", "shop", "selling"],
+              response: "Africana AI is an intelligent economic engine utilizing autonomous agents for real-time price negotiation and TikTok-integrated e-commerce workflows."
           },
           {
-              keywords: ["contact", "email", "whatsapp", "hire", "reach", "phone", "number", "message"],
-              response: "You can reach Peter directly via WhatsApp at +256 789 746 493 or via email at kintupeter7@gmail.com."
+              keywords: ["skills", "expertise", "tech stack", "languages", "flutter", "python", "django", "web3", "ussd"],
+              response: "Peter's core technical stack includes AI/ML (Transformers, RAG), Mobile (Flutter, USSD), Backend (Django, Python), and Web3 (Solidity)."
+          },
+          {
+              keywords: ["contact", "email", "whatsapp", "hire", "reach", "phone", "number", "call", "talk", "message"],
+              response: "You can reach Peter directly via WhatsApp at +256 789 746 493 or via email at kintupeter7@gmail.com for consultations or partnerships."
           }
       ];
 
@@ -46,8 +58,7 @@
           const input = query.toLowerCase();
           let response = null;
 
-          // Improved matching: Checks if the user's word is in our keyword list
-          // OR if our keyword is inside the user's sentence.
+          // Search the local database for broad keyword matches
           for (const item of localKnowledge) {
               const match = item.keywords.some(key => input.includes(key));
               if (match) {
@@ -56,8 +67,9 @@
               }
           }
 
+          // Strict Fallback Protocol
           if (!response) {
-              response = "I don't have a specific record for that. For detailed information, please contact Peter on WhatsApp at +256 789 746 493 or email kintupeter7@gmail.com.";
+              response = "I don't have a specific local record for that query. For detailed information, please contact Peter directly on WhatsApp at +256 789 746 493 or via email at kintupeter7@gmail.com.";
           }
           
           displayMessage(response, false);
@@ -69,19 +81,20 @@
           const chatInput = document.getElementById('chat-input');
           const sendButton = document.getElementById('send-button');
 
-          chatToggle.onclick = () => chatContainer.classList.toggle('open');
+          chatToggle.addEventListener('click', () => chatContainer.classList.toggle('open'));
 
           const sendMessage = () => {
               const query = chatInput.value.trim();
               if (query) {
                   displayMessage(query, true);
                   chatInput.value = '';
-                  setTimeout(() => handleChat(query), 200);
+                  // Simulate brief processing
+                  setTimeout(() => handleChat(query), 300);
               }
           };
 
-          sendButton.onclick = sendMessage;
-          chatInput.onkeypress = (e) => e.key === 'Enter' && sendMessage();
+          sendButton.addEventListener('click', sendMessage);
+          chatInput.addEventListener('keypress', (e) => e.key === 'Enter' && sendMessage());
       };
     </script>
 
@@ -90,67 +103,144 @@
             --bg: #050508;
             --card-bg: #0d0d12;
             --accent: #00d2ff;
+            --accent-glow: rgba(0, 210, 255, 0.3);
             --text-main: #ffffff;
             --text-dim: #94a3b8;
-            --border: rgba(255, 255, 255, 0.1);
             --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
         }
         
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        /* Layout Styles */
-        .navbar { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1100px; padding: 12px 40px; background: rgba(13, 13, 18, 0.7); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 100px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Desktop Navbar */
+        .navbar {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 1100px; padding: 12px 40px;
+            background: rgba(13, 13, 18, 0.7); backdrop-filter: blur(16px);
+            border: 1px solid var(--border); border-radius: 100px;
+            display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+        }
+
         .logo { font-size: 1.1rem; font-weight: 800; color: var(--text-main); text-decoration: none; }
         .logo span { color: var(--accent); }
+
         .nav-links { list-style: none; display: flex; gap: 30px; }
         .nav-links a { text-decoration: none; color: var(--text-dim); font-size: 0.85rem; font-weight: 600; }
+        .nav-links a:hover, .nav-links li.active a { color: var(--accent); }
 
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 100px 10%; text-align: center; }
-        h1 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 800; margin-bottom: 20px; }
+        /* Hero */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle at 50% -20%, var(--accent-glow), transparent 60%);
+            padding: 120px 10% 100px; text-align: center;
+        }
+
+        h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 25px; }
         .gradient-text { background: linear-gradient(90deg, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: var(--text-dim); font-size: 1.1rem; max-width: 700px; margin: 0 auto 40px; }
 
-        /* Chat Styles */
-        #chat-toggle { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--accent); border: none; border-radius: 50%; color: #000; font-size: 1.5rem; cursor: pointer; z-index: 3000; }
-        #chat-container { position: fixed; bottom: 100px; right: 30px; width: 330px; height: 450px; background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border); display: none; flex-direction: column; z-index: 2999; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .btn-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .btn { padding: 14px 30px; border-radius: 100px; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: 0.4s; }
+        .btn-primary { background: var(--text-main); color: var(--bg); }
+        .btn-secondary { border: 1px solid var(--border); color: var(--text-main); background: var(--glass); }
+
+        .profile-container { margin-top: 50px; }
+        .profile-img { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border); box-shadow: 0 0 40px var(--accent-glow); }
+
+        /* Mobile Nav */
+        .mobile-nav { display: none; }
+
+        @media (max-width: 768px) {
+            .navbar { width: 95%; top: 10px; padding: 10px 20px; justify-content: center; }
+            .nav-links { display: none; }
+            .mobile-nav {
+                display: flex; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+                width: 90%; background: rgba(13, 13, 18, 0.85); backdrop-filter: blur(20px);
+                border: 1px solid var(--border); border-radius: 24px; padding: 12px 0;
+                justify-content: space-around; z-index: 2000;
+            }
+            .mobile-nav a { color: var(--text-dim); text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+            .mobile-nav a span { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; }
+            .mobile-nav a.active { color: var(--accent); }
+            #chat-toggle { bottom: 95px !important; }
+            #chat-container { width: 95%; right: 2.5%; bottom: 160px; height: 50vh; }
+        }
+
+        /* Chatbot */
+        #chat-toggle {
+            position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
+            background: var(--accent); border: none; border-radius: 50%; color: var(--bg);
+            font-size: 1.8rem; cursor: pointer; z-index: 3000; box-shadow: 0 10px 25px var(--accent-glow);
+        }
+        #chat-container {
+            position: fixed; bottom: 110px; right: 30px; width: 350px; height: 500px;
+            background: var(--card-bg); border-radius: 24px; display: none; flex-direction: column;
+            border: 1px solid var(--border); z-index: 2999; overflow: hidden;
+        }
         #chat-container.open { display: flex; }
-        .chat-header { background: var(--accent); color: #000; padding: 12px; font-weight: 800; font-size: 0.7rem; text-align: center; text-transform: uppercase; }
-        #chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .message { padding: 8px 12px; border-radius: 12px; font-size: 0.8rem; max-width: 85%; line-height: 1.4; }
-        .bot-message { background: var(--glass); align-self: flex-start; color: var(--text-main); }
-        .user-message { background: var(--accent); color: #000; align-self: flex-end; font-weight: 600; }
-        .chat-input-container { padding: 12px; display: flex; gap: 8px; border-top: 1px solid var(--border); }
-        #chat-input { flex: 1; background: transparent; border: 1px solid var(--border); border-radius: 8px; padding: 8px; color: #fff; outline: none; font-size: 0.8rem; }
-        #send-button { background: var(--accent); border: none; border-radius: 8px; width: 35px; cursor: pointer; }
+        .chat-header { background: var(--accent); color: var(--bg); padding: 15px; font-weight: 800; font-size: 0.75rem; text-align: center; }
+        #chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .message { padding: 10px 15px; border-radius: 15px; font-size: 0.85rem; max-width: 85%; }
+        .bot-message { background: var(--glass); align-self: flex-start; border-bottom-left-radius: 2px; }
+        .user-message { background: var(--accent); color: var(--bg); align-self: flex-end; border-bottom-right-radius: 2px; }
+        .chat-input-container { padding: 15px; display: flex; gap: 10px; border-top: 1px solid var(--border); }
+        #chat-input { flex: 1; background: transparent; border: 1px solid var(--border); border-radius: 10px; padding: 10px; color: #fff; outline: none; }
+        #send-button { background: var(--accent); border: none; border-radius: 10px; width: 40px; color: var(--bg); cursor: pointer; }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <a href="#" class="logo">KP<span>.ARCHITECT</span></a>
+        <a href="index.html" class="logo">KP<span>.ARCHITECT</span></a>
         <ul class="nav-links">
-            <li><a href="#">Intelligence</a></li>
-            <li><a href="#">Architecture</a></li>
-            <li><a href="#">Ecosystems</a></li>
+            <li class="active"><a href="index.html">Intelligence</a></li>
+            <li><a href="about.html">Architecture</a></li>
+            <li><a href="portfolio.html">Ecosystems</a></li>
         </ul>
     </nav>
 
     <section class="hero">
-        <div>
-            <h1>Architecting <br><span class="gradient-text">Autonomous AI</span></h1>
-            <p style="color:var(--text-dim); max-width:600px; margin: 0 auto;">Senior AI Architect & Founder of Nakintu AI. Engineering the future of intelligent agents.</p>
+        <div class="hero-content">
+            <h1>Architecting <br><span class="gradient-text">Autonomous Intelligence</span></h1>
+            <p>
+                Engineering high-impact AI agents and scalable digital infrastructure. Founder of **Nakintu AI** and **Africana AI**.
+            </p>
+            <div class="btn-group">
+                <a href="portfolio.html" class="btn btn-primary">Explore Case Studies</a>
+                <a href="https://github.com/Peter-Kintu" target="_blank" class="btn btn-secondary">
+                    <i class="bx bxl-github"></i> Repository Engine
+                </a>
+            </div>
+            <div class="profile-container">
+                <img src="peter.jpg" alt="Kintu Peter" class="profile-img" />
+            </div>
         </div>
     </section>
 
+    <div class="mobile-nav">
+        <a href="index.html" class="active"><i class='bx bxs-zap'></i><span>Home</span></a>
+        <a href="about.html"><i class='bx bxs-layer'></i><span>About</span></a>
+        <a href="portfolio.html"><i class='bx bxs-grid-alt'></i><span>Projects</span></a>
+    </div>
+
     <div id="chat-container">
-        <div class="chat-header">System Core v3.0 - Local</div>
+        <div class="chat-header">SYSTEM CORE V3.0 LOCAL</div>
         <div id="chat-messages">
-            <div class="message bot-message">System online. How can I help you today?</div>
+            <div class="message bot-message">Link established. How may I assist you with Peter's work today?</div>
         </div>
         <div class="chat-input-container">
-            <input type="text" id="chat-input" placeholder="Type a message..." />
+            <input type="text" id="chat-input" placeholder="Query Peter's background..." />
             <button id="send-button"><i class="bx bxs-send"></i></button>
         </div>
     </div>
     
-    <button id="chat-toggle"><i class="bx bx-message-square-dots"></i></button>
+    <button id="chat-toggle" title="Open Assistant"><i class="bx bx-bot"></i></button>
 </body>
 </html>
