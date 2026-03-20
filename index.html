@@ -3,506 +3,336 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kintu Peter | Full Stack Developer & AI Engineer</title>
-    <meta name="description" content="Portfolio of Kintu Peter, a full stack developer specializing in Flutter, Django, React, AI, and Blockchain." />
-    <meta name="keywords" content="Kintu Peter, Flutter, Django, React, AI, Blockchain, Uganda Developer" />
-    <meta name="author" content="Kintu Peter" />
+    <title>Kintu Peter | AI Systems Architect</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <script>
-      // Function to display messages in the chat
-      function displayMessage(text, isUser = false) {
-          const chatWindow = document.getElementById('chat-messages');
-          const messageElement = document.createElement('div');
-          messageElement.classList.add('message');
-          if (isUser) {
-              messageElement.classList.add('user-message');
-          } else {
-              messageElement.classList.add('bot-message');
-          }
-          messageElement.textContent = text;
-          chatWindow.appendChild(messageElement);
-          chatWindow.scrollTop = chatWindow.scrollHeight; // Auto-scroll to the bottom
-      }
 
-      // Local knowledge base about Kintu Peter with better keyword matching
-      const localKnowledge = [
-          {
-              keywords: ["who is kintu peter", "who are you", "who is the developer"],
-              response: "Kintu Peter is a passionate full stack developer, AI engineer, and blockchain innovator."
-          },
-          {
-              keywords: ["what are your skills", "skills", "what do you do", "expertise"],
-              response: "Kintu Peter's expertise spans Flutter, Django, React, C# .NET, and AI integration."
-          },
-          {
-              keywords: ["where are you based", "where is kintu peter from", "location"],
-              response: "Kintu Peter is based in Uganda, and he builds applications to empower communities across Africa and beyond."
-          },
-          {
-              keywords: ["how can i contact you", "contact", "email", "phone", "linkedin"],
-              response: "You can find his contact information on this page, including links to his CV, GitHub, LinkedIn, WhatsApp, and email."
-          },
-          {
-              keywords: ["what is your mission", "mission statement", "goal"],
-              response: "His mission is to build intelligent, secure, and scalable applications that create innovative digital experiences."
-          }
-      ];
-
-      const handleChat = async (query) => {
-          let response = null;
-          const lowerCaseQuery = query.toLowerCase();
-
-          // Check against local knowledge base
-          for (const item of localKnowledge) {
-              if (item.keywords.some(keyword => lowerCaseQuery.includes(keyword))) {
-                  response = item.response;
-                  break;
-              }
-          }
-
-          // If no local match, use Gemini API
-          if (!response) {
-              displayMessage("...", false); // Show loading indicator
-              try {
-                  const geminiResponse = await callGeminiAPI(query);
-                  response = geminiResponse || "I couldn't find an answer for that. Please try asking in a different way.";
-              } catch (error) {
-                  console.error('Error calling Gemini API:', error);
-                  response = "I'm having trouble connecting right now. Please try again later.";
-              }
-          }
-          
-          // Replace loading indicator with the actual response or display a new one
-          const loadingIndicator = document.querySelector('.bot-message:last-child');
-          if (loadingIndicator && loadingIndicator.textContent === "...") {
-              loadingIndicator.textContent = response;
-          } else {
-              displayMessage(response, false);
-          }
-      };
-
-      const callGeminiAPI = async (userPrompt) => {
-          const systemPrompt = "You are a helpful assistant. Provide a concise, clear answer to the user's question.";
-          const apiKey = "AIzaSyCVj9c7qbPqq_3R9WgWbaRmQ6WQT3-c7CA";
-          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-          const payload = {
-              contents: [{ parts: [{ text: userPrompt }] }],
-              tools: [{ "google_search": {} }],
-              systemInstruction: {
-                  parts: [{ text: systemPrompt }]
-              },
-          };
-
-          const response = await fetch(apiUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload)
-          });
-
-          if (!response.ok) {
-              const errorText = await response.text();
-              throw new Error(`API error: ${response.status} ${errorText}`);
-          }
-
-          const result = await response.json();
-          const candidate = result.candidates?.[0];
-          return candidate?.content?.parts?.[0]?.text || '';
-      };
-      
-      window.onload = function() {
-          const chatButton = document.getElementById('chat-toggle');
-          const chatContainer = document.getElementById('chat-container');
-          const chatInput = document.getElementById('chat-input');
-          const sendButton = document.getElementById('send-button');
-
-          chatButton.addEventListener('click', () => {
-              chatContainer.classList.toggle('open');
-          });
-
-          const sendMessage = () => {
-              const userQuery = chatInput.value.trim();
-              if (userQuery) {
-                  displayMessage(userQuery, true);
-                  chatInput.value = '';
-                  handleChat(userQuery);
-              }
-          };
-
-          sendButton.addEventListener('click', sendMessage);
-
-          chatInput.addEventListener('keypress', (event) => {
-              if (event.key === 'Enter') {
-                  sendMessage();
-              }
-          });
-      };
-    </script>
     <style>
         :root {
-            --bg-color: #1a1a1a;
-            --text-color: #f5f5f5;
-            --secondary-text-color: #ccc;
-            --primary-color: #0078D4;
-            --border-color: #333;
-            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-        
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
+            --bg: #0a0a0c;
+            --card-bg: #121214;
+            --primary: #00d2ff;
+            --accent: #9d50bb;
+            --text: #ffffff;
+            --text-dim: #a1a1aa;
+            --nav-bg: rgba(10, 10, 12, 0.9);
         }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
-            background-color: transparent;
-            position: absolute;
+            padding: 20px 8%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            position: fixed;
             width: 100%;
-            box-sizing: border-box;
-            z-index: 10;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
             text-decoration: none;
-            letter-spacing: 1px;
+            letter-spacing: -1px;
         }
 
         .nav-links {
-            list-style: none;
             display: flex;
             gap: 30px;
-            font-weight: 500;
+            list-style: none;
         }
 
-        .nav-links li a {
+        .nav-links a {
+            color: var(--text-dim);
             text-decoration: none;
-            color: var(--text-color);
-            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.3s;
         }
 
-        .nav-links li a:hover,
-        .nav-links li.active a {
-            color: var(--primary-color);
+        .nav-links a:hover {
+            color: var(--primary);
         }
 
-        .home {
+        /* --- HERO SECTION --- */
+        .hero {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            justify-content: center;
             min-height: 100vh;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            padding: 80px 40px;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(0, 120, 212, 0.1), rgba(26, 26, 26, 1));
+            padding: 100px 8% 50px;
+            gap: 50px;
         }
 
-        .home-content {
-            flex: 1;
-            max-width: 800px;
-            margin-bottom: 40px;
+        @media (min-width: 992px) {
+            .hero { flex-direction: row; text-align: left; }
         }
 
-        .home-content h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            line-height: 1.2;
-        }
+        .hero-content { flex: 1; max-width: 650px; text-align: center; }
+        @media (min-width: 992px) { .hero-content { text-align: left; } }
 
-        .home-content h1 span {
-            color: var(--primary-color);
-        }
-
-        .home-content h2 {
-            font-size: 1.8rem;
-            font-weight: 500;
-            color: var(--secondary-text-color);
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1.1;
             margin-bottom: 20px;
+            font-weight: 800;
         }
 
-        .home-content p {
-            font-size: 1rem;
-            color: var(--secondary-text-color);
-            max-width: 600px;
-            margin: 0 auto 30px;
+        .hero-content span {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .btn-sci {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
+        .hero-content p {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 35px;
+            max-width: 500px;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 14px 28px;
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 120, 212, 0.3);
-        }
-
-        .btn:hover {
-            background-color: #005fa3;
-            transform: translateY(-3px);
-        }
-
-        .sci {
-            display: flex;
-            gap: 20px;
-        }
-
-        .sci a {
-            font-size: 2rem;
-            color: var(--secondary-text-color);
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .sci a:hover {
-            color: var(--primary-color);
-            transform: translateY(-3px);
-        }
-
-        .home-img {
+        .hero-img {
             flex: 1;
             display: flex;
             justify-content: center;
-            align-items: center;
         }
 
         .img-box {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
+            width: clamp(260px, 30vw, 420px);
+            height: clamp(260px, 30vw, 420px);
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
             overflow: hidden;
-            border: 5px solid var(--primary-color);
-            box-shadow: 0 0 40px rgba(0, 120, 212, 0.5);
-            transition: transform 0.3s ease;
+            box-shadow: 0 20px 50px rgba(0, 210, 255, 0.15);
         }
 
-        .img-box:hover {
-            transform: scale(1.05);
-        }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        .profile-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* --- SECTION COMMONS --- */
+        section { padding: 100px 8%; }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            font-weight: 800;
         }
-        
-        /* Chatbot Styles */
-        #chat-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            border: none;
-            border-radius: 50%;
+        .section-title span { color: var(--primary); }
+
+        /* --- ABOUT SECTION --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        @media (min-width: 992px) { .about-grid { grid-template-columns: 1.2fr 1fr; } }
+
+        .about-text p { margin-bottom: 20px; color: var(--text-dim); font-size: 1.05rem; }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .skill-tag {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            cursor: pointer;
-            box-shadow: var(--box-shadow);
-            transition: transform 0.3s ease;
-            z-index: 1000;
+            gap: 10px;
+        }
+        .skill-tag i { color: var(--primary); font-size: 1.2rem; }
+
+        /* --- PROJECTS GRID --- */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
         }
 
-        #chat-toggle:hover {
-            transform: scale(1.1);
-        }
-
-        #chat-container {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 350px;
-            height: 450px;
-            background-color: #2b2b2b;
-            border-radius: 12px;
-            box-shadow: var(--box-shadow);
-            display: none;
+        .project-card {
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
             flex-direction: column;
-            overflow: hidden;
-            z-index: 999;
         }
 
-        #chat-container.open {
-            display: flex;
+        .project-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
         }
 
-        .chat-header {
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            padding: 15px;
-            font-weight: bold;
+        .project-card i.icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
+        .project-card h3 { margin-bottom: 15px; font-size: 1.4rem; }
+        .project-card p { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 25px; flex-grow: 1; }
+
+        .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag {
+            background: rgba(0,210,255,0.08);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* --- FOOTER --- */
+        footer {
             text-align: center;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
+            padding: 60px 8%;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-dim);
+            font-size: 0.9rem;
         }
 
-        #chat-messages {
-            flex-grow: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background-color: #1a1a1a;
-        }
-
-        .message {
-            max-width: 80%;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            line-height: 1.4;
-            word-wrap: break-word;
-        }
-
-        .user-message {
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            margin-left: auto;
-            border-bottom-right-radius: 2px;
-        }
-
-        .bot-message {
-            background-color: #444;
-            color: var(--text-color);
-            border-bottom-left-radius: 2px;
-        }
-        
-        .chat-input-container {
-            display: flex;
-            padding: 10px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        #chat-input {
-            flex-grow: 1;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            background-color: #333;
-            color: var(--text-color);
-            border-radius: 20px;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        #send-button {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            cursor: pointer;
-            margin-left: 10px;
-            transition: color 0.3s ease;
-        }
-
-        #send-button:hover {
-            color: #005fa3;
-        }
-
+        /* --- MOBILE MENU FIX --- */
         @media (max-width: 768px) {
-            .navbar {
-                padding: 15px 20px;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-
-            .home {
-                flex-direction: column-reverse;
-                text-align: center;
-                padding: 60px 20px;
-            }
-
-            .home-content, .home-img {
-                width: 100%;
-                text-align: center;
-            }
-
-            .home-img {
-                margin-bottom: 20px;
-            }
-
-            .home-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .home-content h2 {
-                font-size: 1.2rem;
-            }
+            .nav-links { display: none; } /* Simplified for single page */
+            .navbar { padding: 15px 5%; }
+            .hero { padding-top: 120px; }
         }
     </style>
 </head>
 <body>
+
     <nav class="navbar">
-        <a href="#" class="logo">Kintu Peter</a>
+        <a href="#home" class="logo">KP.ARCHITECT</a>
         <ul class="nav-links">
-            <li class="active"><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="portfolio.html">My projects</a></li>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="mailto:kintupeter7@gmail.com">Contact</a></li>
         </ul>
     </nav>
 
-    <section class="home">
-        <div class="home-content">
-            <h1>Hello, I'm <span>Kintu Peter</span></h1>
-            <h2>Full Stack Developer | AI Engineer | Blockchain Innovator</h2>
-            <p>I build intelligent, secure, and scalable applications across mobile, web, and blockchain platforms. My mission is to create innovative digital experiences that empower communities and drive innovation across Africa and beyond.</p>
-
-            <div class="btn-sci">
-                <a href="cv.Peter.pdf" class="btn" download>📄 Download CV</a>
-                <div class="sci">
-                    <a href="https://github.com/Peter-Kintu" target="_blank"><i class="bx bxl-github"></i></a>
-                    <a href="https://linkedin.com/in/peter-kintu" target="_blank"><i class="bx bxl-linkedin"></i></a>
-                    <a href="https://wa.me/256789746493" target="_blank"><i class="bx bxl-whatsapp"></i></a>
-                    <a href="mailto:kintupeter7@gmail.com"><i class="bx bx-envelope"></i></a>
-                </div>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Architecting <br><span>Intelligence.</span></h1>
+            <p>I am Kintu Peter, an AI Engineer and Systems Architect focused on building autonomous agents, LLM-powered applications, and scalable full-stack infrastructure.</p>
+            <div style="display:flex; gap:15px; justify-content: center; flex-wrap: wrap;">
+                <a href="#projects" style="text-decoration:none; background:var(--primary); color:#000; padding:15px 35px; border-radius:12px; font-weight:700;">Explore Projects</a>
+                <a href="https://github.com/Peter-Kintu" target="_blank" style="text-decoration:none; border:1px solid var(--text-dim); color:#fff; padding:15px 35px; border-radius:12px; font-weight:700;">GitHub Profile</a>
             </div>
         </div>
+        <div class="hero-img">
+            <div class="img-box"><img src="peter.jpg" alt="Kintu Peter Profile"></div>
+        </div>
+    </section>
 
-        <div class="home-img">
-            <div class="img-box">
-                <img src="peter.jpg" alt="Kintu Peter" class="profile-img" />
+    <section id="about" style="background: rgba(255,255,255,0.02);">
+        <h2 class="section-title">Professional <span>Profile</span></h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>Based in Uganda, I bridge the gap between complex AI research and practical, impactful software. With a background in Mathematics and ICT, I specialize in the "End-to-End" lifecycle of intelligent products.</p>
+                <p>Currently leading <strong>Nakintu AI</strong> and <strong>Africana AI</strong>, I focus on decentralized commerce and multilingual education technology designed for global scalability.</p>
+                <div class="skills-grid">
+                    <div class="skill-tag"><i class='bx bx-brain'></i> AI & LLMs</div>
+                    <div class="skill-tag"><i class='bx bx-mobile-alt'></i> Flutter / Dart</div>
+                    <div class="skill-tag"><i class='bx bxl-python'></i> Django / Python</div>
+                    <div class="skill-tag"><i class='bx bx-link'></i> Web3 / Solidity</div>
+                </div>
+            </div>
+            <div style="background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+                <h4 style="margin-bottom: 15px; color: var(--primary);">Quick Facts</h4>
+                <ul style="list-style: none; color: var(--text-dim); font-size: 0.95rem;">
+                    <li style="margin-bottom: 10px;"><i class='bx bx-check-circle' style="color:var(--primary);"></i> Built 3+ production AI platforms</li>
+                    <li style="margin-bottom: 10px;"><i class='bx bx-check-circle' style="color:var(--primary);"></i> 10+ mobile & web apps deployed</li>
+                    <li style="margin-bottom: 10px;"><i class='bx bx-check-circle' style="color:var(--primary);"></i> MIT App Inventor Tech Educator</li>
+                    <li><i class='bx bx-check-circle' style="color:var(--primary);"></i> Web3/Blockchain Hackathon Finalist</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- Chatbot Container -->
-    <div id="chat-container">
-        <div class="chat-header">Kintu Peter Bot</div>
-        <div id="chat-messages">
-            <div class="message bot-message">Hi! I can answer questions about Kintu Peter. What would you like to know?</div>
-            <div class="message user-message">Who is Kintu Peter?</div>
-            <div class="message bot-message">Kintu Peter is a passionate full stack developer, AI engineer, and blockchain innovator.</div>
+    <section id="projects">
+        <h2 class="section-title">Selected <span>Architectures</span></h2>
+        <div class="project-grid">
+            
+            <div class="project-card">
+                <i class='bx bx-shopping-bag icon'></i>
+                <h3>Africana AI</h3>
+                <p>Autonomous economic engine featuring real-time price negotiation agents and TikTok-style video commerce.</p>
+                <div class="tag-row"><span class="tag">AI Agents</span><span class="tag">Flutter</span><span class="tag">Firebase</span></div>
+            </div>
+
+            <div class="project-card">
+                <i class='bx bx-book-open icon'></i>
+                <h3>Nakintu AI</h3>
+                <p>Multilingual EdTech platform with intelligent tutoring, automated report analysis, and quiz generation.</p>
+                <div class="tag-row"><span class="tag">LLMs</span><span class="tag">Django</span><span class="tag">React</span></div>
+            </div>
+
+            <div class="project-card">
+                <i class='bx bx-plus-medical icon'></i>
+                <h3>Musawo AI</h3>
+                <p>Clinical decision support system providing health intelligence and Al-driven patient diagnosis assistance.</p>
+                <div class="tag-row"><span class="tag">HealthTech</span><span class="tag">NLP</span><span class="tag">API</span></div>
+            </div>
+
+            <div class="project-card">
+                <i class='bx bx-link-alt icon'></i>
+                <h3>Crypto Farm</h3>
+                <p>Blockchain platform for agricultural finance featuring decentralized lending and smart contract security.</p>
+                <div class="tag-row"><span class="tag">Web3</span><span class="tag">Solidity</span><span class="tag">Base</span></div>
+            </div>
+
+            <div class="project-card">
+                <i class='bx bx-wifi icon'></i>
+                <h3>Wi-Fi Manager</h3>
+                <p>Secure authentication system using smart token distribution and embedded router session logic.</p>
+                <div class="tag-row"><span class="tag">Security</span><span class="tag">Django</span><span class="tag">Postgres</span></div>
+            </div>
+
+            <div class="project-card">
+                <i class='bx bx-analyse icon'></i>
+                <h3>AI Diagnosis</h3>
+                <p>Specialized knowledge retrieval system for healthcare professionals to assist in data-driven decision making.</p>
+                <div class="tag-row"><span class="tag">Transformers</span><span class="tag">Data</span></div>
+            </div>
+
         </div>
-        <div class="chat-input-container">
-            <input type="text" id="chat-input" placeholder="Ask me anything..." />
-            <button id="send-button"><i class="bx bxs-send"></i></button>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Kintu Peter. Designed for High Performance & Intelligence.</p>
+        <div style="margin-top:15px; font-size: 1.5rem;">
+            <a href="https://github.com/Peter-Kintu" style="color:var(--text-dim); margin: 0 10px;"><i class='bx bxl-github'></i></a>
+            <a href="https://linkedin.com/in/peter-kintu" style="color:var(--text-dim); margin: 0 10px;"><i class='bx bxl-linkedin'></i></a>
+            <a href="mailto:kintupeter7@gmail.com" style="color:var(--text-dim); margin: 0 10px;"><i class='bx bx-envelope'></i></a>
         </div>
-    </div>
-    
-    <button id="chat-toggle"><i class="bx bx-chat"></i></button>
+    </footer>
+
 </body>
 </html>
