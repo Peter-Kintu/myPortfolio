@@ -14,34 +14,38 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
     <script>
-      // Professional Knowledge Base with Acknowledgment Support
+      // Professional Knowledge Base - V2.7 (Expanded Vocabulary)
       const localKnowledge = [
           {
-              keywords: ["hi", "hello", "hey", "greetings", "morning", "evening", "test"],
+              keywords: ["hi", "hello", "hey", "greetings", "morning", "evening", "test", "yo", "sup"],
               response: "Link established. I am Peter's digital twin. You can ask me about Nakintu AI, Africana AI, his technical skills, or how to contact him."
           },
           {
-              keywords: ["ok", "okey", "okay", "cool", "thanks", "thank you", "nice", "awesome", "got it"],
+              keywords: ["ok", "okey", "okay", "cool", "thanks", "thank you", "nice", "awesome", "got it", "yes", "yep", "yap", "yup", "sure", "please", "definitely"],
               response: "Understood. Is there anything specific about Peter's AI architectures or platforms you'd like to dive into?"
           },
           {
-              keywords: ["who is", "kintu", "peter", "about", "developer", "background", "architect", "founder"],
+              keywords: ["no", "nope", "nothing", "nah", "stop", "exit", "bye", "goodbye", "naught"],
+              response: "Acknowledged. I'll be here if you need further technical insights. Systems standing by."
+          },
+          {
+              keywords: ["who is", "kintu", "peter", "about", "developer", "background", "architect", "founder", "profile"],
               response: "Kintu Peter is a Senior AI Systems Architect and Founder specializing in LLM-powered agents, scalable intelligent platforms, and infrastructure for the African digital economy."
           },
           {
-              keywords: ["nakintu ai", "learnflow", "education", "tutor", "school", "multilingual"],
-              response: "Nakintu AI is a specialized educational ecosystem featuring AI tutoring, automated report generation, and multilingual learning tools designed for high accessibility."
+              keywords: ["nakintu ai", "learnflow", "education", "tutor", "school", "multilingual", "student"],
+              response: "Nakintu AI (formerly LearnFlow) is an educational ecosystem featuring AI tutoring, automated report generation, and multilingual learning tools designed for high accessibility."
           },
           {
-              keywords: ["africana ai", "ecommerce", "negotiation", "tiktok", "market", "agent"],
+              keywords: ["africana ai", "ecommerce", "negotiation", "tiktok", "market", "agent", "sales"],
               response: "Africana AI is an intelligent economic engine utilizing autonomous agents for real-time price negotiation and seamless TikTok-to-AI e-commerce workflows."
           },
           {
-              keywords: ["skills", "expertise", "tech stack", "languages", "python", "flutter", "blockchain", "solidity", "ussd"],
+              keywords: ["skills", "expertise", "tech stack", "languages", "python", "flutter", "blockchain", "solidity", "ussd", "ai", "ml"],
               response: "His core technical stack includes AI/ML (Transformers, RAG, Fine-tuning), Mobile (Flutter, USSD), Backend (Django, Python), and Web3 (Solidity)."
           },
           {
-              keywords: ["contact", "email", "whatsapp", "hire", "reach", "call", "number", "talk"],
+              keywords: ["contact", "email", "whatsapp", "hire", "reach", "call", "number", "talk", "location"],
               response: "You can reach Peter directly at kintupeter7@gmail.com or via WhatsApp at +256 789 746 493 for technical consultations."
           }
       ];
@@ -57,12 +61,13 @@
 
       const handleChat = (query) => {
           let response = null;
-          // Trim and lower case for better matching
-          const lowerCaseQuery = query.toLowerCase().trim();
+          // Clean the query: lowercase, remove punctuation, and trim
+          const cleanQuery = query.toLowerCase().replace(/[^\w\s]/gi, '').trim();
+          const words = cleanQuery.split(/\s+/);
 
-          // Search for keyword matches
+          // Priority Search: Check if any word in the user's query exactly matches a keyword
           for (const item of localKnowledge) {
-              if (item.keywords.some(keyword => lowerCaseQuery.includes(keyword))) {
+              if (item.keywords.some(keyword => words.includes(keyword) || cleanQuery.includes(keyword))) {
                   response = item.response;
                   break;
               }
@@ -356,7 +361,7 @@
     </section>
 
     <div id="chat-container">
-        <div class="chat-header">SYSTEM CORE V2.5 ONLINE</div>
+        <div class="chat-header">SYSTEM CORE V2.7 ONLINE</div>
         <div id="chat-messages">
             <div class="message bot-message">Link established. I am the digital representative for Peter's AI architectures. How may I assist your inquiry?</div>
         </div>
